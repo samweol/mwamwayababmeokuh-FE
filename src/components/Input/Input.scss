@@ -1,0 +1,38 @@
+@use "../../styles/color";
+
+// 애니메이션 추가 예정
+
+.input-cont {
+  position: relative;
+  width: 300px;
+  height: 56px;
+  margin: 12px auto;
+  padding: 12px 8px;
+  border: 1px solid color.$border-dark-gray;
+}
+
+.input-cont.focused {
+  border: 1px solid color.$point-color;
+}
+
+.input-cont .input-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: color.$font-dark-gray;
+}
+
+.input-cont.focused .input-label {
+  position: relative;
+  top: 0;
+
+  display: block;
+  font-size: 12px;
+  color: color.$point-color;
+}
+
+input {
+  width: 100%;
+  margin: 0 auto;
+  color: color.$font-white;
+}

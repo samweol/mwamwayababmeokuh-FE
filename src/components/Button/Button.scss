@@ -1,0 +1,18 @@
+@use "../../styles/color";
+
+button.btn {
+  width: 300px;
+  margin: 12px auto;
+  border-radius: 24px;
+  padding: 12px 0;
+
+  font-weight: 700;
+  background-color: color.$light-mode-bg;
+  color: color.$font-black;
+}
+
+button.btn.inversed {
+  background-color: color.$dark-mode-bg;
+  color: color.$font-white;
+  border: 1px solid color.$border-dark-gray;
+}
