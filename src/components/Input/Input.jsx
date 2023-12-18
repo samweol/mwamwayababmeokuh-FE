@@ -3,7 +3,8 @@ import "./Input.scss";
 
 const Input = forwardRef((props, ref) => {
   const [isFocus, setIsFocus] = useState();
-  const { labelText, onChangeHandler, type } = props;
+  const { value, labelText, onChangeHandler, type } = props;
+
   return (
     <div
       className={`input-cont ${isFocus && "focused"}`}
@@ -11,7 +12,11 @@ const Input = forwardRef((props, ref) => {
         setIsFocus(true);
       }}
       onBlur={() => {
-        setIsFocus(false);
+        if (value.length) {
+          setIsFocus(true);
+        } else if (value.length === 0) {
+          setIsFocus(false);
+        }
       }}
     >
       <label htmlFor="input" className="input-label">

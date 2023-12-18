@@ -1,10 +1,13 @@
 import "./Button.scss";
 
 export default function Button(props) {
-  const { children, inversed, onClickHandler } = props;
+  const { children, inversed, disabled, bottomFixed, onClickHandler } = props;
   return (
     <button
-      className={`btn ${inversed && "inversed"}`}
+      disabled={disabled}
+      className={`btn ${inversed && "inversed"} ${
+        bottomFixed && "btn-bottom-fixed"
+      }`}
       onClick={onClickHandler}
     >
       {children}

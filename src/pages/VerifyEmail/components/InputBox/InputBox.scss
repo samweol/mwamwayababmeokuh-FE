@@ -1,0 +1,17 @@
+@use "../../../../styles/color";
+
+section.inputbox-cont {
+  display: flex;
+}
+
+input.input-box {
+  margin: 12px 0;
+  border: 1px solid color.$border-dark-gray;
+  height: 85px;
+  text-align: center;
+  font-size: 32px;
+}
+
+input.input-box.focused {
+  border: 1px solid color.$point-color;
+}
