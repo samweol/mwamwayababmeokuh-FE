@@ -1,5 +1,14 @@
+import BottomTab from "./components/BottomTab/BottomTab";
+import Layout from "./components/Layout/Layout";
+import Navbar from "./components/Navbar/Navbar";
+
 function App() {
-  return <div>뫄뫄야 밥먹자</div>;
+  return (
+    <Layout>
+      <Navbar />
+      <BottomTab />
+    </Layout>
+  );
 }
 
 export default App;
