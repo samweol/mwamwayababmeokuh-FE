@@ -26,3 +26,9 @@ button.btn-bottom-fixed {
   left: 50%;
   transform: translateX(-50%);
 }
+
+// 비활성화
+button.btn.disabled {
+  cursor: default;
+  background-color: color.$border-dark-gray;
+}

@@ -7,7 +7,7 @@ export default function Button(props) {
       disabled={disabled}
       className={`btn ${inversed && "inversed"} ${
         bottomFixed && "btn-bottom-fixed"
-      }`}
+      } ${disabled && "disabled"}`}
       onClick={onClickHandler}
     >
       {children}

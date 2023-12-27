@@ -1,7 +1,9 @@
 @use "../../styles/color";
 
 // 애니메이션 추가 예정
-
+article.input-article {
+  margin: 0 auto;
+}
 .input-cont {
   position: relative;
   width: 300px;
@@ -35,4 +37,11 @@ input {
   width: 100%;
   margin: 0 auto;
   color: color.$font-white;
+}
+
+strong.alert {
+  display: inline-block;
+  margin: 4px 0;
+  color: color.$font-red;
+  font-size: 14px;
 }

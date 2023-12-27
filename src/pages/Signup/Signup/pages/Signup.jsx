@@ -1,9 +1,9 @@
-import Layout from "../../../components/Layout/Layout";
-import PageMainHeader from "../../../components/PageMainHeader/PageMainHeader";
-import Input from "../../../components/Input/Input";
-import Button from "../../../components/Button/Button";
 import { useState } from "react";
-import useNavigatePage from "../../../hooks/useNavigatePage";
+import Layout from "../../../../components/Layout/Layout";
+import useNavigatePage from "../../../../hooks/useNavigatePage";
+import PageMainHeader from "../../../../components/PageMainHeader/PageMainHeader";
+import Input from "../../../../components/Input/Input";
+import Button from "../../../../components/Button/Button";
 
 export default function Signup() {
   const [userData, setUserData] = useState({
