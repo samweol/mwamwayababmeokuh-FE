@@ -6,6 +6,7 @@ import Signup from "../pages/Signup/Signup/pages/Signup";
 import VerifyEmail from "../pages/Signup/VerifyEmail/pages/VerifyEmail";
 import GetPassword from "../pages/Signup/GetPassword/pages/GetPassword";
 import EditProfile from "../pages/EditProfile/pages/EditProfile";
+import SelectArtist from "../pages/SelectArtist/pages/SelectArtist";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -36,6 +37,10 @@ export default function Router() {
     {
       path: "/profile/edit",
       element: <EditProfile />,
+    },
+    {
+      path: "/select-artist",
+      element: <SelectArtist />,
     },
   ]);
   return <RouterProvider router={router} />;

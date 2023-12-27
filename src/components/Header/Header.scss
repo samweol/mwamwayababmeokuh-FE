@@ -1,0 +1,17 @@
+header.basic-header {
+  display: flex;
+  align-items: center;
+}
+
+// 헤더의 뒤로가기 버튼
+header.basic-header .header-back-btn {
+  flex-grow: 1;
+  text-align: left;
+  cursor: pointer;
+}
+
+// 헤더의 타이틀
+header.basic-header .header-title {
+  flex-grow: 6;
+  font-weight: 700;
+}

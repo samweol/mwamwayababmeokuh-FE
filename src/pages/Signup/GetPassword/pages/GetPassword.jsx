@@ -13,7 +13,7 @@ export default function GetPassword() {
     passwordData.pw.length && passwordData.pw === passwordData.checkpw;
 
   const onCompleteSignup = () => {
-    navigatePage("/profile/edit");
+    navigatePage("/select-artist");
   };
   return (
     <Layout>
