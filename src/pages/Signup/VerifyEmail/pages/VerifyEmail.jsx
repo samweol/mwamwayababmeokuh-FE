@@ -4,6 +4,7 @@ import Layout from "../../../../components/Layout/Layout";
 import PageMainHeader from "../../../../components/PageMainHeader/PageMainHeader";
 import InputBoxContainer from "../components/InputBox/InputBoxContainer";
 import useNavigatePage from "../../../../hooks/useNavigatePage";
+import LayoutContent from "../../../../components/Layout/LayoutContent";
 
 export default function VerifyEmail() {
   const [code, setCode] = useState([]);
@@ -18,15 +19,17 @@ export default function VerifyEmail() {
   const { navigatePage } = useNavigatePage();
   return (
     <Layout>
-      <PageMainHeader>이메일을 인증하세요.</PageMainHeader>
-      <InputBoxContainer onChangeCode={onChangeCode} />
-      <Button
-        bottomFixed={true}
-        disabled={!isButtonActive}
-        onClickHandler={onNextBtnClickHandler}
-      >
-        Next
-      </Button>
+      <LayoutContent>
+        <PageMainHeader>이메일을 인증하세요.</PageMainHeader>
+        <InputBoxContainer onChangeCode={onChangeCode} />
+        <Button
+          bottomFixed={true}
+          disabled={!isButtonActive}
+          onClickHandler={onNextBtnClickHandler}
+        >
+          Next
+        </Button>
+      </LayoutContent>
     </Layout>
   );
 }

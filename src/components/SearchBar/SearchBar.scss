@@ -1,0 +1,17 @@
+@use "../../styles/color";
+div.searchbar-cont {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: color.$bg-light-gray;
+  border-radius: 24px;
+  margin-top: 24px;
+}
+input.searchbar-input {
+  background-color: color.$bg-light-gray;
+  padding: 8px 12px;
+}
+
+button.searchbar-btn {
+  margin: 0 8px;
+}
