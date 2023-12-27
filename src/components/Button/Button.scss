@@ -1,12 +1,18 @@
 @use "../../styles/color";
 
+button.s {
+  width: 80px;
+  padding: 8px 0;
+}
+button.m {
+  width: 300px;
+  padding: 12px 0;
+}
+
 // 버튼 기본 스타일링
 button.btn {
-  width: 300px;
   margin: 12px auto;
   border-radius: 24px;
-  padding: 12px 0;
-
   font-weight: 700;
   background-color: color.$light-mode-bg;
   color: color.$font-black;
@@ -25,4 +31,10 @@ button.btn-bottom-fixed {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+// 비활성화
+button.btn.disabled {
+  cursor: default;
+  background-color: color.$border-dark-gray;
 }
