@@ -1,6 +1,7 @@
 @use "../../styles/color";
 
 nav.bottomtab {
+  background-color: color.$dark-mode-bg;
   position: fixed;
   bottom: 0;
   width: 100%;

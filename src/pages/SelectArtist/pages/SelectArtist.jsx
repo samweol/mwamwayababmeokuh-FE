@@ -23,7 +23,7 @@ export default function SelectArtis() {
         <Button
           bottomFixed={true}
           onClickHandler={() => {
-            navigatePage("/");
+            navigatePage("/home");
           }}
         >
           Skip

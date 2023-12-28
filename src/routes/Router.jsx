@@ -7,12 +7,17 @@ import VerifyEmail from "../pages/Signup/VerifyEmail/pages/VerifyEmail";
 import GetPassword from "../pages/Signup/GetPassword/pages/GetPassword";
 import EditProfile from "../pages/EditProfile/pages/EditProfile";
 import SelectArtist from "../pages/SelectArtist/pages/SelectArtist";
+import Home from "../pages/Home/pages/Home";
 
 export default function Router() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <App />,
+    },
+    {
+      path: "/home",
+      element: <Home />,
     },
     {
       path: "/signin",
