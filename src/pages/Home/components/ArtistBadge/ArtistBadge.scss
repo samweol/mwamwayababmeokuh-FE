@@ -1,0 +1,11 @@
+@use "../../../../styles/color";
+section.badge-cont {
+  margin-bottom: 12px;
+  button.badge {
+    margin-right: 8px;
+    padding: 4px 8px;
+    color: color.$font-white;
+    background-color: color.$bg-light-gray;
+    border-radius: 12px;
+  }
+}
