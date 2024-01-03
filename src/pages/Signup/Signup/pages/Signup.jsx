@@ -22,7 +22,7 @@ export default function Signup() {
 
   return (
     <Layout>
-      <LayoutContent>
+      <LayoutContent padding={true}>
         <PageMainHeader>계정을 생성하세요.</PageMainHeader>
         <Input
           labelText="닉네임"

@@ -1,0 +1,29 @@
+@use "../../../../styles/color";
+
+section.userinfo-cont {
+  margin-top: 12px;
+  padding: 0 24px;
+  div.user-edit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    img.user-image {
+      width: 90px;
+      height: 90px;
+      border: 1px solid color.$border-black;
+      box-sizing: border-box;
+      border-radius: 100%;
+    }
+  }
+
+  div.user-info {
+    margin-top: 24px;
+    span.user-nickname {
+      font-size: 20px;
+      font-weight: 800;
+    }
+    p.user-introduce {
+      margin-top: 12px;
+    }
+  }
+}

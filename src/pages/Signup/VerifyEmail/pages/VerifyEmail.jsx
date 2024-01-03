@@ -19,7 +19,7 @@ export default function VerifyEmail() {
   const { navigatePage } = useNavigatePage();
   return (
     <Layout>
-      <LayoutContent>
+      <LayoutContent padding={true}>
         <PageMainHeader>이메일을 인증하세요.</PageMainHeader>
         <InputBoxContainer onChangeCode={onChangeCode} />
         <Button
