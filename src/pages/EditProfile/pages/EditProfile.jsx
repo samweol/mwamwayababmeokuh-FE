@@ -6,7 +6,7 @@ export default function EditProfile() {
   return (
     <Layout>
       <Header title="Edit Profile" buttonText="Save"></Header>
-      <LayoutContent></LayoutContent>
+      <LayoutContent padding={true}></LayoutContent>
     </Layout>
   );
 }

@@ -11,7 +11,7 @@ export default function Signin() {
   const { navigatePage } = useNavigatePage();
   return (
     <Layout>
-      <LayoutContent>
+      <LayoutContent padding={true}>
         <PageMainHeader>Sign in to 뫄뫄야밥먹어</PageMainHeader>
         <Button>Sign in with Goggle</Button>
         <Button>Sign in with Apple</Button>

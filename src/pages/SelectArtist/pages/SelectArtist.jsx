@@ -12,7 +12,7 @@ export default function SelectArtis() {
   const { navigatePage } = useNavigatePage();
   return (
     <Layout>
-      <LayoutContent>
+      <LayoutContent padding={true}>
         <SearchBar
           keyword={keyword}
           onChangeHandler={(e) => {
