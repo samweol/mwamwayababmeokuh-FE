@@ -2,13 +2,13 @@ import { forwardRef, useState } from "react";
 import "./Input.scss";
 
 const Input = forwardRef((props, ref) => {
-  const [isFocus, setIsFocus] = useState();
-  const { value, labelText, onChangeHandler, type, alert } = props;
+  const [isFocus, setIsFocus] = useState(false);
+  const { value, labelText, onChangeHandler, type, alert, flex } = props;
 
   return (
-    <article className="input-article">
+    <article className={`input-article ${flex && "flex"}`}>
       <div
-        className={`input-cont ${isFocus && "focused"}`}
+        className={`input-cont ${isFocus && "focused"} ${flex && "flex"}`}
         onFocus={() => {
           setIsFocus(true);
         }}

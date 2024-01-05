@@ -1,0 +1,24 @@
+@use "../../styles/color";
+
+article.image-upload-cont {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  label.image-upload-label {
+    img.image-upload-icon {
+      width: 45px;
+      height: 45px;
+    }
+  }
+  input.image-upload-btn {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+}
