@@ -4,6 +4,11 @@
 article.input-article {
   margin: 0 auto;
 }
+
+article.input-article.flex {
+  margin: 0;
+}
+
 .input-cont {
   position: relative;
   width: 300px;
@@ -11,6 +16,10 @@ article.input-article {
   margin: 12px auto;
   padding: 12px 8px;
   border: 1px solid color.$border-dark-gray;
+}
+
+.input-cont.flex {
+  width: 100%;
 }
 
 .input-cont.focused {

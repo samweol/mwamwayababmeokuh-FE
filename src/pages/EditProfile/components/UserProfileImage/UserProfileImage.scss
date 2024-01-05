@@ -1,0 +1,17 @@
+@use "../../../../styles/color";
+
+article.userimage-change-cont {
+  position: relative;
+  padding: 12px 0;
+  span.userimage-cont {
+    position: relative;
+    display: inline-block;
+  }
+  img {
+    width: 90px;
+    height: 90px;
+    border: 1px solid color.$border-black;
+    box-sizing: border-box;
+    border-radius: 100%;
+  }
+}
