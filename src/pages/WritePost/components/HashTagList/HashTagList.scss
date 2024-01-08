@@ -9,7 +9,16 @@ ul.hashtag-list {
 }
 
 li.hashtag-item {
-  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  padding: 4px 12px;
   border-radius: 12px;
   background-color: color.$point-color;
+
+  button {
+    padding: 0;
+    img {
+      padding-top: 4px;
+    }
+  }
 }

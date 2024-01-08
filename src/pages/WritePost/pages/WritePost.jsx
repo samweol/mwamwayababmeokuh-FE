@@ -22,6 +22,11 @@ export default function WritePost() {
     setSearchKeyword("");
   };
 
+  const deleteHashTag = (hashtag) => {
+    const tempHashTagList = hashTagList;
+    setHashtagList(tempHashTagList.filter((item) => item != hashtag));
+  };
+
   return (
     <Layout>
       <Header buttonText="Post" />
@@ -35,7 +40,10 @@ export default function WritePost() {
           }}
           onAddHashTag={addHashTag}
         />
-        <HashTagList hashTagList={hashTagList} />
+        <HashTagList
+          hashTagList={hashTagList}
+          onDeleteHashTag={deleteHashTag}
+        />
       </LayoutContent>
     </Layout>
   );
