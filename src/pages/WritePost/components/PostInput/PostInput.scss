@@ -1,0 +1,21 @@
+@use "../../../../styles/color";
+
+article.postinput-cont {
+  display: flex;
+  gap: 8px;
+  img.postinput-profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+  }
+
+  textarea.postinput-textarea {
+    border: none;
+    width: 100%;
+    min-height: 150px;
+    padding: 8px 12px;
+    font-size: 16px;
+    color: color.$font-white;
+    resize: none;
+  }
+}

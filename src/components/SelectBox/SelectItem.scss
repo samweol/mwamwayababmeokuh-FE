@@ -1,0 +1,13 @@
+@use "../../styles/color";
+
+li.select-item {
+  button.select-item-btn {
+    width: 100%;
+    padding: 12px 8px;
+    color: color.$font-white;
+  }
+
+  button.select-item-btn:hover {
+    background-color: color.$point-color;
+  }
+}

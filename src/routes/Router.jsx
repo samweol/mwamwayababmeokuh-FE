@@ -8,6 +8,7 @@ import EditProfile from "../pages/EditProfile/pages/EditProfile";
 import SelectArtist from "../pages/SelectArtist/pages/SelectArtist";
 import Home from "../pages/Home/pages/Home";
 import Profile from "../pages/Profile/pages/Profile";
+import WritePost from "../pages/WritePost/pages/WritePost";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -18,6 +19,10 @@ export default function Router() {
     {
       path: "/home",
       element: <Home />,
+    },
+    {
+      path: "/post/write",
+      element: <WritePost />,
     },
     {
       path: "/signin",
