@@ -1,0 +1,15 @@
+@use "../../../../styles/color";
+
+ul.hashtag-list {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  margin: 8px 0;
+  list-style: none;
+}
+
+li.hashtag-item {
+  padding: 8px 12px;
+  border-radius: 12px;
+  background-color: color.$point-color;
+}

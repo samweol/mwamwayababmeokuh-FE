@@ -1,0 +1,25 @@
+@use "../../../../styles/color";
+
+div.hashtag-cont {
+  label.hashtag-label {
+    display: inline-block;
+    margin: 8px 0;
+  }
+  div.hashtag-input-cont {
+    display: flex;
+    align-items: center;
+    border: 1px solid color.$border-dark-gray;
+
+    input.hashtag-input {
+      width: 100%;
+      padding: 8px 12px;
+    }
+
+    button {
+      padding: 8px;
+      font-size: 24px;
+      color: color.$font-white;
+      cursor: pointer;
+    }
+  }
+}
