@@ -1,0 +1,40 @@
+@use "../../styles/color";
+
+div.select-cont {
+  position: relative;
+  width: 120px;
+  margin-bottom: 12px;
+  button.select-btn {
+    width: 100%;
+    padding: 8px 12px;
+    background-color: color.$dark-mode-bg;
+    color: color.$font-white;
+    border: 1px solid color.$border-dark-gray;
+    border-radius: 12px;
+    cursor: pointer;
+    /* 말줄임 */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  button.select-btn.selected {
+    background-color: color.$point-color;
+  }
+
+  ul.select-list {
+    position: absolute;
+    display: none;
+    overflow: hidden;
+    width: 100%;
+    list-style: none;
+    margin-top: 8px;
+    border-radius: 12px;
+    border: 1px solid color.$border-dark-gray;
+    background-color: color.$dark-mode-bg;
+  }
+
+  ul.select-list.active {
+    display: block;
+  }
+}
