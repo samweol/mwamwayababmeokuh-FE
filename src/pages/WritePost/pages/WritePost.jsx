@@ -11,6 +11,7 @@ export default function WritePost() {
   const [selected, setSelected] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [hashTagList, setHashtagList] = useState([]);
+  const [searchResultList, setSearchResultList] = useState([]);
 
   /**
    * 해시태그 추가 함수

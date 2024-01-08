@@ -1,6 +1,7 @@
 @use "../../../../styles/color";
 
 div.hashtag-cont {
+  position: relative;
   label.hashtag-label {
     display: inline-block;
     margin: 8px 0;
@@ -21,5 +22,24 @@ div.hashtag-cont {
       color: color.$font-white;
       cursor: pointer;
     }
+  }
+
+  ul.search-list {
+    display: none;
+    position: absolute;
+    width: 100%;
+    max-height: 160px;
+    overflow: scroll;
+    list-style: none;
+    background-color: color.$dark-mode-bg;
+    border: 1px solid color.$border-dark-gray;
+
+    li.search-item {
+      padding: 8px 12px;
+    }
+  }
+
+  ul.search-list.focused {
+    display: block;
   }
 }

@@ -1,7 +1,7 @@
 import "./HashTagInput.scss";
 
 export default function HashTagInput(props) {
-  const { value, onAddHashTag, onChangeHandler } = props;
+  const { value, searchResultList, onAddHashTag, onChangeHandler } = props;
   return (
     <div className="hashtag-cont">
       <label className="hashtag-label" htmlFor="hashtag">
@@ -17,6 +17,16 @@ export default function HashTagInput(props) {
         />
         <button onClick={onAddHashTag}>+</button>
       </div>
+
+      <ul className="search-list">
+        <li className="search-item">#뫄뫄야_밥먹자</li>
+        <li className="search-item">#뫄뫄야_밥먹자</li>
+        <li className="search-item">#뫄뫄야_밥먹자</li>
+        <li className="search-item">#뫄뫄야_밥먹자</li>
+        <li className="search-item">#뫄뫄야_밥먹자</li>
+        <li className="search-item">#뫄뫄야_밥먹자</li>
+        <li className="search-item">#뫄뫄야_밥먹자</li>
+      </ul>
     </div>
   );
 }
