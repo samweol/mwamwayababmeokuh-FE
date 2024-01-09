@@ -9,6 +9,7 @@ import SelectArtist from "../pages/SelectArtist/pages/SelectArtist";
 import Home from "../pages/Home/pages/Home";
 import Profile from "../pages/Profile/pages/Profile";
 import WritePost from "../pages/WritePost/pages/WritePost";
+import PostDetail from "../pages/PostDetail/pages/PostDetail";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -51,6 +52,10 @@ export default function Router() {
     {
       path: "/select-artist",
       element: <SelectArtist />,
+    },
+    {
+      path: "/post/detail",
+      element: <PostDetail />,
     },
   ]);
   return <RouterProvider router={router} />;

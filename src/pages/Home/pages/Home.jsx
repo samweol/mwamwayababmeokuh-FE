@@ -12,12 +12,13 @@ export default function Home() {
       <MainHeader />
       <LayoutContent>
         <ArtistBadge artist="레드벨벳" />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
+        <Post line={true} />
+        <Post line={true} />
+        <Post line={true} />
+        <Post line={true} />
+        <Post line={true} />
+        <Post line={true} />
+        <Post line={true} />
         <WriteButton />
       </LayoutContent>
       <BottomTab />

@@ -2,10 +2,17 @@ import "./Post.scss";
 import ProfileImage from "../../assets/images/image.png";
 import HeartIcon from "../../assets/images/heart.png";
 import VerticalMore from "../../assets/images/more-vertical.png";
+import useNavigatePage from "../../hooks/useNavigatePage";
 export default function Post(props) {
-  const { onLikeButtonClickHandler } = props;
+  const { line, onLikeButtonClickHandler } = props;
+  const { navigatePage } = useNavigatePage();
   return (
-    <article className="post-cont">
+    <article
+      className={`post-cont ${line && "line"}`}
+      onClick={() => {
+        navigatePage("/post/detail");
+      }}
+    >
       <div className="profile-img-cont">
         <img
           className="profile-img"

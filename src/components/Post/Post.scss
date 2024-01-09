@@ -2,9 +2,12 @@
 
 article.post-cont {
   display: flex;
+  padding: 12px 24px;
+}
+
+article.post-cont.line {
   border-top: 1px solid color.$border-dark-gray;
   border-bottom: 1px solid color.$border-dark-gray;
-  padding: 12px 24px;
 }
 
 img.profile-img {
