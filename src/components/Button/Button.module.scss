@@ -1,0 +1,44 @@
+@use "../../styles/color";
+
+button.s {
+  min-width: 80px;
+  padding: 8px 12px;
+}
+button.m {
+  width: 300px;
+  padding: 12px 0;
+}
+
+// 버튼 기본 스타일링
+button.btn {
+  margin: 12px auto;
+  border-radius: 24px;
+  font-weight: 700;
+  background-color: color.$light-mode-bg;
+  color: color.$font-black;
+}
+
+button.flex {
+  margin: 0;
+}
+
+// 버튼 색 반전
+button.btn.inversed {
+  background-color: color.$dark-mode-bg;
+  color: color.$font-white;
+  border: 1px solid color.$border-dark-gray;
+}
+
+// 버튼 하단 고정
+button.btn-bottom-fixed {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+// 비활성화
+button.btn.disabled {
+  cursor: default;
+  background-color: color.$border-dark-gray;
+}

@@ -1,4 +1,4 @@
-import "./WriteButton.scss";
+import styles from "./WriteButton.module.scss";
 import useNavigatePage from "../../../../hooks/useNavigatePage";
 import WriteIcon from "../../../../assets/images/write.png";
 
@@ -6,7 +6,7 @@ export default function WriteButton() {
   const { navigatePage } = useNavigatePage();
   return (
     <button
-      className="write-button"
+      className={styles["write-button"]}
       onClick={() => {
         navigatePage("/post/write");
       }}

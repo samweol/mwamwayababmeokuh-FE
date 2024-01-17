@@ -1,5 +1,5 @@
 import { forwardRef, useState } from "react";
-import "./InputBox.scss";
+import styles from "./InputBox.module.scss";
 const InputBox = forwardRef((props, ref) => {
   const { onChangeHandler } = props;
   const [isFocused, setIsFocused] = useState(false);
@@ -11,7 +11,7 @@ const InputBox = forwardRef((props, ref) => {
         maxLength={1}
         ref={ref}
         id="input-box"
-        className={`input-box ${isFocused && "focused"}`}
+        className={`${styles["input-box"]} ${isFocused && styles.focused}`}
         onFocus={() => {
           setIsFocused(true);
         }}

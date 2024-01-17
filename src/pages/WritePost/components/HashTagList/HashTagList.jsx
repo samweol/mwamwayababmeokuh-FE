@@ -1,10 +1,10 @@
-import "./HashTagList.scss";
+import styles from "./HashTagList.module.scss";
 import CloseIcon from "../../../../assets/images/close.png";
 
 function HashTagItem(props) {
   const { hashtag, onDeleteHashTag } = props;
   return (
-    <li key={hashtag} className="hashtag-item">
+    <li key={hashtag} className={styles["hashtag-item"]}>
       {hashtag}
       <button
         onClick={() => {
@@ -22,5 +22,5 @@ export default function HashTagList(props) {
   const hashTagItemList = hashTagList.map((item) => (
     <HashTagItem key={item} hashtag={item} onDeleteHashTag={onDeleteHashTag} />
   ));
-  return <ul className="hashtag-list">{hashTagItemList}</ul>;
+  return <ul className={styles["hashtag-list"]}>{hashTagItemList}</ul>;
 }

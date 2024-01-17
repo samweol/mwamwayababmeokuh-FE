@@ -1,10 +1,10 @@
-import "./SelectItem.scss";
+import styles from "./SelectItem.module.scss";
 export default function SelectItem(props) {
   const { artist, onSelectHandler } = props;
   return (
-    <li className="select-item">
+    <li className={styles["select-item"]}>
       <button
-        className="select-item-btn"
+        className={styles["select-item-btn"]}
         onClick={() => {
           onSelectHandler("레드벨벳");
         }}

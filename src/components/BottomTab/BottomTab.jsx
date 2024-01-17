@@ -1,4 +1,4 @@
-import "./BottomTab.scss";
+import styles from "./BottomTab.module.scss";
 
 export default function BottomTab() {
   const tabList = [
@@ -21,14 +21,14 @@ export default function BottomTab() {
   ];
 
   const tabListComponent = tabList.map((item, idx) => (
-    <li key={idx} className="tab-item">
+    <li key={idx} className={styles["tab-item"]}>
       <a href={item.url}>{item.title}</a>
     </li>
   ));
 
   return (
-    <nav className="bottomtab">
-      <ul className="tab-list">{tabListComponent}</ul>
+    <nav className={styles.bottomtab}>
+      <ul className={styles["tab-list"]}>{tabListComponent}</ul>
     </nav>
   );
 }

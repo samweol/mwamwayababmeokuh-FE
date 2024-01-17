@@ -1,4 +1,5 @@
-import "./Button.scss";
+// import "./Button.scss";
+import styles from "./Button.module.scss";
 
 export default function Button(props) {
   const {
@@ -13,9 +14,11 @@ export default function Button(props) {
   return (
     <button
       disabled={disabled}
-      className={`btn ${inversed && "inversed"} ${
-        bottomFixed && "btn-bottom-fixed"
-      } ${disabled && "disabled"} ${size ? size : "m"} ${flex && "flex"}`}
+      className={`${styles.btn} ${inversed && styles.inversed} ${
+        bottomFixed && styles["btn-bottom-fixed"]
+      } ${disabled && styles.disabled} ${size ? styles[size] : styles.m} ${
+        flex && styles.flex
+      }`}
       onClick={onClickHandler}
     >
       {children}

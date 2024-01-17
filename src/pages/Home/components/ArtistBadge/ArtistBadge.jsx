@@ -1,9 +1,9 @@
-import "./ArtistBadge.scss";
+import styles from "./ArtistBadge.module.scss";
 export default function ArtistBadge(props) {
   const { artist } = props;
   return (
-    <section className="badge-cont">
-      <button className="badge">{artist}</button>
+    <section className={styles["badge-cont"]}>
+      <button className={styles.badge}>{artist}</button>
     </section>
   );
 }

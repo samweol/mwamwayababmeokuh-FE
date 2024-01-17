@@ -1,14 +1,16 @@
 import { forwardRef, useState } from "react";
-import "./Input.scss";
+import styles from "./Input.module.scss";
 
 const Input = forwardRef((props, ref) => {
   const [isFocus, setIsFocus] = useState(false);
   const { value, labelText, onChangeHandler, type, alert, flex } = props;
 
   return (
-    <article className={`input-article ${flex && "flex"}`}>
+    <article className={` ${styles["input-article"]} ${flex && styles.flex}`}>
       <div
-        className={`input-cont ${isFocus && "focused"} ${flex && "flex"}`}
+        className={` ${styles["input-cont"]} ${isFocus && styles.focused} ${
+          flex && styles.flex
+        }`}
         onFocus={() => {
           setIsFocus(true);
         }}
@@ -20,7 +22,7 @@ const Input = forwardRef((props, ref) => {
           }
         }}
       >
-        <label htmlFor="input" className="input-label">
+        <label htmlFor="input" className={styles["input-label"]}>
           {labelText}
         </label>
         <input
@@ -30,7 +32,7 @@ const Input = forwardRef((props, ref) => {
           onChange={onChangeHandler}
         />
       </div>
-      {alert && <strong className="alert">{alert}</strong>}
+      {alert && <strong className={styles.alert}>{alert}</strong>}
     </article>
   );
 });

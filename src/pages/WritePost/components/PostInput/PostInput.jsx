@@ -1,11 +1,11 @@
-import "./PostInput.scss";
+import styles from "./PostInput.module.scss";
 import ProfileImage from "../../../../assets/images/image.png";
 
 export default function PostInput() {
   return (
-    <article className="postinput-cont">
-      <img className="postinput-profile" src={ProfileImage} alt="" />
-      <textarea className="postinput-textarea"></textarea>
+    <article className={styles["postinput-cont"]}>
+      <img className={styles["postinput-profile"]} src={ProfileImage} alt="" />
+      <textarea className={styles["postinput-textarea"]}></textarea>
     </article>
   );
 }

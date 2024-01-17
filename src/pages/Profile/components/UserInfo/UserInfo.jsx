@@ -1,4 +1,4 @@
-import "./UserInfo.scss";
+import styles from "./UserInfo.module.scss";
 import ProfileImage from "../../../../assets/images/image.png";
 import Button from "../../../../components/Button/Button";
 import useNavigatePage from "../../../../hooks/useNavigatePage";
@@ -6,10 +6,10 @@ import useNavigatePage from "../../../../hooks/useNavigatePage";
 export default function UserInfo() {
   const { navigatePage } = useNavigatePage();
   return (
-    <section className="userinfo-cont">
-      <div className="user-edit">
+    <section className={styles["userinfo-cont"]}>
+      <div className={styles["user-edit"]}>
         <img
-          className="user-image"
+          className={styles["user-image"]}
           src={ProfileImage}
           alt="유저 프로필 이미지"
         />
@@ -24,9 +24,9 @@ export default function UserInfo() {
           Edit Profile
         </Button>
       </div>
-      <div className="user-info">
-        <span className="user-nickname">삼월</span>
-        <p className="user-introduce">
+      <div className={styles["user-info"]}>
+        <span className={styles["user-nickname"]}>삼월</span>
+        <p className={styles["user-introduce"]}>
           왼손엔 정지훈 오른손엔 김민교 나는 왼손잡이
         </p>
       </div>

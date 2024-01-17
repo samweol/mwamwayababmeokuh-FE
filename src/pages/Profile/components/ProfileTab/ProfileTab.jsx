@@ -1,8 +1,8 @@
-import "./ProfileTab.scss";
+import styles from "./ProfileTab.module.scss";
 
 export default function ProfileTab() {
   return (
-    <ul className="tab-cont">
+    <ul className={styles["tab-cont"]}>
       <li>Post</li>
       <li>Media</li>
       <li>Hashtag</li>

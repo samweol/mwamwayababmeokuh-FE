@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import InputBox from "./InputBox";
-import "./InputBox.scss";
+import styles from "./InputBox.module.scss";
 export default function InputBoxContainer(props) {
   const { onChangeCode } = props;
   const inputBoxRef = useRef([]);
@@ -10,7 +10,7 @@ export default function InputBoxContainer(props) {
   const inputBoxRef5 = useRef([]);
   const inputBoxRef6 = useRef([]);
   return (
-    <section className="inputbox-cont">
+    <section className={styles["inputbox-cont"]}>
       <InputBox
         ref={inputBoxRef}
         onChangeHandler={() => {

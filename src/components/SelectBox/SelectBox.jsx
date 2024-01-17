@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./SelectBox.scss";
+import styles from "./SelectBox.module.scss";
 import SelectItem from "./SelectItem";
 
 export default function SelectBox(props) {
@@ -24,14 +24,20 @@ export default function SelectBox(props) {
     setIsActiveSelectBox(!isActiveSelectBox);
   };
   return (
-    <div className="select-cont">
+    <div className={styles["select-cont"]}>
       <button
-        className={`select-btn ${selected.length && "selected"}`}
+        className={`${styles["select-btn"]} ${
+          selected.length && styles.selected
+        }`}
         onClick={onClickSelectButton}
       >
         {selected === "" ? "아티스트" : selected}
       </button>
-      <ul className={`select-list ${isActiveSelectBox && "active"}`}>
+      <ul
+        className={` ${styles["select-list"]} ${
+          isActiveSelectBox && styles.active
+        }`}
+      >
         {selectItemList}
       </ul>
     </div>
