@@ -10,6 +10,7 @@ import Home from "../pages/Home/pages/Home";
 import Profile from "../pages/Profile/pages/Profile";
 import WritePost from "../pages/WritePost/pages/WritePost";
 import PostDetail from "../pages/PostDetail/pages/PostDetail";
+import Search from "../pages/Search/pages/Search";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -20,6 +21,10 @@ export default function Router() {
     {
       path: "/home",
       element: <Home />,
+    },
+    {
+      path: "/search",
+      element: <Search />,
     },
     {
       path: "/post/write",
