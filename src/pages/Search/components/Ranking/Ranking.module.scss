@@ -1,0 +1,13 @@
+@use "../../../../styles/color";
+
+section.rankCont {
+  h1 {
+    font-weight: 800;
+    font-size: 24px;
+    padding: 12px 0;
+  }
+
+  ol.rankList {
+    list-style: none;
+  }
+}
