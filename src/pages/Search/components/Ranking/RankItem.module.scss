@@ -1,0 +1,15 @@
+@use "../../../../styles/color";
+li.rankItem {
+  padding: 12px 0;
+  font-weight: 700;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  span.rankItemPosts {
+    color: color.$font-dark-gray;
+  }
+}
