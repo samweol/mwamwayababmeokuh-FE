@@ -11,6 +11,7 @@ import Profile from "../pages/Profile/pages/Profile";
 import WritePost from "../pages/WritePost/pages/WritePost";
 import PostDetail from "../pages/PostDetail/pages/PostDetail";
 import Search from "../pages/Search/pages/Search";
+import Like from "../pages/Like/pages/Like";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -25,6 +26,10 @@ export default function Router() {
     {
       path: "/search",
       element: <Search />,
+    },
+    {
+      path: "/like",
+      element: <Like />,
     },
     {
       path: "/post/write",
