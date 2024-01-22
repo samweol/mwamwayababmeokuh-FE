@@ -4,12 +4,16 @@ import EmptyHeartIcon from "../../assets/images/empty-heart.png";
 import HeartIcon from "../../assets/images/heart.png";
 import VerticalMore from "../../assets/images/more-vertical.png";
 import useNavigatePage from "../../hooks/useNavigatePage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export default function Post(props) {
   const { post, line } = props;
   const { navigatePage } = useNavigatePage();
 
   const [liked, setLiked] = useState(false);
+
+  useEffect(() => {
+    setLiked(post.liked);
+  }, [post.liked]);
 
   return (
     <article className={`${styles["post-cont"]} ${line && styles.line}`}>
