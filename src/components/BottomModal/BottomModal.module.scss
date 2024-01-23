@@ -1,0 +1,30 @@
+@use "../../styles/color";
+div.modalBg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: color.$modal-bg;
+  z-index: 10;
+
+  ul.modalCont {
+    position: fixed;
+    z-index: 100;
+    bottom: 0;
+    width: 100%;
+    background-color: color.$dark-mode-bg;
+    list-style: none;
+    border-radius: 12px 12px 0 0;
+    padding-top: 24px;
+
+    li.menuItem {
+      padding: 12px 24px;
+      cursor: pointer;
+    }
+
+    li.cancelBtn {
+      display: flex;
+    }
+  }
+}

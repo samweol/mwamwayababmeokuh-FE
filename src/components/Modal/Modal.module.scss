@@ -1,0 +1,51 @@
+@use "../../styles/color";
+div.modalBg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: color.$modal-bg;
+  z-index: 10;
+
+  div.modalCont {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 12px;
+    background-color: color.$bg-dark-gray;
+    min-width: 300px;
+    padding-top: 24px;
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    div.buttonCont {
+      display: flex;
+      width: 100%;
+      margin-top: 12px;
+
+      button {
+        width: 100%;
+        padding: 12px;
+        font-size: 20px;
+        border-top: 1px solid color.$border-dark-gray;
+      }
+
+      button.cancel {
+        color: blue;
+        border-right: 1px solid color.$border-dark-gray;
+      }
+      button.accept {
+        color: red;
+      }
+    }
+  }
+}

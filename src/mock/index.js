@@ -1,3 +1,6 @@
+/**
+ * post 목업 데이터
+ */
 export const postData = [
   {
     key: 1,
@@ -26,5 +29,21 @@ export const postData = [
     content: "루시 콘서트 언제해 ?",
     images: [],
     liked: true,
+  },
+];
+
+/**
+ * 바텀 모달창 메뉴 리스트 목업 데이터
+ */
+export const menuData = [
+  {
+    key: 1,
+    label: "삭제하기",
+    onClickHandler: () => {},
+  },
+  {
+    key: 2,
+    label: "수정하기",
+    onClickHandler: () => {},
   },
 ];
