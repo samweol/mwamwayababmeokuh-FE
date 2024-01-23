@@ -6,7 +6,7 @@ import VerticalMore from "../../assets/images/more-vertical.png";
 import useNavigatePage from "../../hooks/useNavigatePage";
 import { useEffect, useState } from "react";
 export default function Post(props) {
-  const { post, line } = props;
+  const { post, line, onClickMoreButton } = props;
   const { navigatePage } = useNavigatePage();
 
   const [liked, setLiked] = useState(false);
@@ -36,7 +36,7 @@ export default function Post(props) {
             <span className={styles["artis-badge"]}>{post.artist}</span>
             <span className={styles["post-time"]}>{post.updatedAt}</span>
           </div>
-          <button className={styles["more-btn"]}>
+          <button className={styles["more-btn"]} onClick={onClickMoreButton}>
             <img src={VerticalMore} alt="더보기 로고" />
           </button>
         </div>
