@@ -17,12 +17,7 @@ export default function Post(props) {
 
   return (
     <article className={`${styles["post-cont"]} ${line && styles.line}`}>
-      <div
-        className={styles["profile-img-cont"]}
-        onClick={() => {
-          navigatePage("/post/detail", { post });
-        }}
-      >
+      <div className={styles["profile-img-cont"]}>
         <img
           className={styles["profile-img"]}
           src={ProfileImage}
@@ -40,7 +35,12 @@ export default function Post(props) {
             <img src={VerticalMore} alt="더보기 로고" />
           </button>
         </div>
-        <div className={styles["post-content"]}>
+        <div
+          onClick={() => {
+            navigatePage("/post/detail", { post });
+          }}
+          className={styles["post-content"]}
+        >
           <p>{post.content}</p>
           <ul className={styles["post-img-cont"]}>
             {post.images.map((item) => (
