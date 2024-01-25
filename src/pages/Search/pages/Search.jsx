@@ -5,15 +5,19 @@ import SearchHeader from "../../../components/Header/SearchHeader";
 import Ranking from "../components/Ranking/Ranking";
 import { useState } from "react";
 import SearchResult from "../components/SearchResult/SearchResult";
+import useDebounce from "../../../hooks/useDebounce";
 
 export default function Search() {
   const [keyword, setKeyword] = useState("");
+  const { debounceValue } = useDebounce(keyword, 3000);
 
   const onSelectRankKeyword = (keyword) => {
     setKeyword(keyword);
   };
 
-  // useEffect(() => {}, [keyword]);
+  const searchFun = () => {
+    console.log(debounceValue);
+  };
 
   return (
     <Layout>
