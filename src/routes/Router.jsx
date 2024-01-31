@@ -12,6 +12,7 @@ import WritePost from "../pages/WritePost/pages/WritePost";
 import PostDetail from "../pages/PostDetail/pages/PostDetail";
 import Search from "../pages/Search/pages/Search";
 import Like from "../pages/Like/pages/Like";
+import FindPassword from "../pages/FindPassword/pages/FindPassword";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -38,6 +39,10 @@ export default function Router() {
     {
       path: "/signin",
       element: <Signin />,
+    },
+    {
+      path: "/findpassword",
+      element: <FindPassword />,
     },
     {
       path: "/signup",

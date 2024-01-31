@@ -38,7 +38,14 @@ export default function Signin() {
         >
           Go to Signup
         </Button>
-        <Button inversed={true}>Forgot password?</Button>
+        <Button
+          inversed={true}
+          onClickHandler={() => {
+            navigatePage("/findpassword");
+          }}
+        >
+          Forgot password?
+        </Button>
       </LayoutContent>
     </Layout>
   );
