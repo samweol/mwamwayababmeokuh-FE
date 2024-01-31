@@ -12,6 +12,8 @@ import WritePost from "../pages/WritePost/pages/WritePost";
 import PostDetail from "../pages/PostDetail/pages/PostDetail";
 import Search from "../pages/Search/pages/Search";
 import Like from "../pages/Like/pages/Like";
+import FindPassword from "../pages/FindPassword/pages/FindPassword";
+import AddArtist from "../pages/AddArtist/pages/AddArtist";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -40,6 +42,10 @@ export default function Router() {
       element: <Signin />,
     },
     {
+      path: "/findpassword",
+      element: <FindPassword />,
+    },
+    {
       path: "/signup",
       element: <Signup />,
     },
@@ -50,6 +56,10 @@ export default function Router() {
     {
       path: "/signup/password",
       element: <GetPassword />,
+    },
+    {
+      path: "/signup/add-artist",
+      element: <AddArtist />,
     },
     {
       path: "/profile",

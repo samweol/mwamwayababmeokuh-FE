@@ -32,6 +32,7 @@ div.select-cont {
     border-radius: 12px;
     border: 1px solid color.$border-dark-gray;
     background-color: color.$dark-mode-bg;
+    z-index: 100;
   }
 
   ul.select-list.active {
