@@ -6,7 +6,7 @@ export default function SelectItem(props) {
       <button
         className={styles["select-item-btn"]}
         onClick={() => {
-          onSelectHandler("레드벨벳");
+          onSelectHandler();
         }}
       >
         {artist}

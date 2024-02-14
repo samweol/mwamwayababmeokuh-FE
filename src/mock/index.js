@@ -57,5 +57,18 @@ export const userData = {
   email: "samweol@test.com",
   bio: null,
   role: "general",
-  artistDTOList: ["레드벨벳", "루시", "르세라핌", "뉴진스", "데이식스"],
+  artistDTOList: [
+    {
+      aid: 1,
+      name: "김태연",
+    },
+    {
+      aid: 2,
+      name: "김효연",
+    },
+    {
+      aid: 3,
+      name: "티파니",
+    },
+  ],
 };

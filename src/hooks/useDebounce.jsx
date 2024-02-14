@@ -5,8 +5,10 @@ export default function useDebounce(value, delay) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setDebounceValue(value);
-      console.log("디바운싱 적용중");
+      if (value.length) {
+        setDebounceValue(value);
+        console.log("디바운싱 적용중");
+      }
     }, delay);
 
     return () => {
