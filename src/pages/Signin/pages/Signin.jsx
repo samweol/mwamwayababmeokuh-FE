@@ -5,20 +5,32 @@ import Layout from "../../../components/Layout/Layout";
 import useNavigatePage from "../../../hooks/useNavigatePage";
 import PageMainHeader from "../../../components/PageMainHeader/PageMainHeader";
 import LayoutContent from "../../../components/Layout/LayoutContent";
+import { api } from "../../../api/baseURL";
+import { useSetRecoilState } from "recoil";
+import { userState } from "../../../recoil/atom";
 
 export default function Signin() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+
+  const setUser = useSetRecoilState(userState);
+
   const { navigatePage } = useNavigatePage();
-  const signInAPI = () => {
+
+  /**
+   * 로그인 api
+   */
+  const signInAPI = async () => {
+    const id = emailRef.current.value;
+    const pw = passwordRef.current.value;
     try {
-      const signInData = {
-        id: emailRef.current.value,
-        pw: passwordRef.current.value,
-      };
+      await api.post("/auth/login", { id, pw });
+      setUser([]);
       navigatePage("/home");
+      console.log("🌟로그인 성공🌟");
     } catch (err) {
       console.error(err);
+      console.log("🔥로그인 실패🔥");
     }
   };
   return (
