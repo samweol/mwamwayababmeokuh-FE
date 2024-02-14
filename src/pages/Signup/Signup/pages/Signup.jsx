@@ -17,7 +17,9 @@ export default function Signup() {
   const isButtonActive = Object.values(userData).every((item) => item.length);
 
   const onNextBtnClickHandler = () => {
-    navigatePage("/signup/verify-email");
+    const { nickname, email } = userData;
+    navigatePage("/signup/password", { nickname, email });
+    // navigatePage("/signup/verify-email", { nickname, email });
   };
 
   return (

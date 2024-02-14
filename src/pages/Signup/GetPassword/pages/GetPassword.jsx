@@ -4,16 +4,34 @@ import Input from "../../../../components/Input/Input";
 import Button from "../../../../components/Button/Button";
 import { useState } from "react";
 import useNavigatePage from "../../../../hooks/useNavigatePage";
+import { useLocation } from "react-router-dom";
+import { api } from "../../../../api/baseURL";
 
 export default function GetPassword() {
   const [passwordData, setPasswordData] = useState({ pw: "", checkpw: "" });
+
+  const location = useLocation();
+  const { nickname, email } = location.state;
+
   const { navigatePage } = useNavigatePage();
 
   const isButtonActive =
     passwordData.pw.length && passwordData.pw === passwordData.checkpw;
 
-  const onCompleteSignup = () => {
-    navigatePage("/select-artist");
+  const onCompleteSignup = async () => {
+    try {
+      await api.post("/auth/register", {
+        email,
+        nickname,
+        pw: passwordData.pw,
+      });
+
+      console.log("🌟회원가입 성공🌟");
+      navigatePage("/select-artist");
+    } catch (err) {
+      console.error(err);
+      console.log("🔥회원가입 실패🔥");
+    }
   };
   return (
     <Layout>
