@@ -57,4 +57,5 @@ export const userData = {
   email: "samweol@test.com",
   bio: null,
   role: "general",
+  artistDTOList: ["레드벨벳", "루시", "르세라핌", "뉴진스", "데이식스"],
 };

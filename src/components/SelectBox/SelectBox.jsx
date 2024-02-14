@@ -4,12 +4,12 @@ import SelectItem from "./SelectItem";
 
 export default function SelectBox(props) {
   const [isActiveSelectBox, setIsActiveSelectBox] = useState(false);
-  const { selected, onSelectHandler } = props;
+  const { selectList, selected, onSelectHandler } = props;
 
   // 더미데이터
   const artist = ["레드벨벳", "루시", "르세라핌", "뉴진스", "데이식스"];
 
-  const selectItemList = artist.map((item) => (
+  const selectItemList = selectList?.map((item) => (
     <SelectItem
       key={item}
       artist={item}
