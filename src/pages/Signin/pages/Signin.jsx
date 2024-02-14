@@ -23,8 +23,9 @@ export default function Signin() {
   const signInAPI = async () => {
     const id = emailRef.current.value;
     const pw = passwordRef.current.value;
+
     try {
-      await api.post("/auth/login", { id, pw });
+      const user = await api.post("/auth/login", { id, pw });
       setUser([]);
       navigatePage("/home");
       console.log("🌟로그인 성공🌟");
