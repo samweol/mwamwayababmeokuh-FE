@@ -6,8 +6,13 @@ import useNavigatePage from "./hooks/useNavigatePage";
 
 function App() {
   const { navigatePage } = useNavigatePage();
+  const isLogined = localStorage.getItem("recoil-persist");
   useEffect(() => {
-    navigatePage("/home");
+    if (isLogined) {
+      navigatePage("/home");
+    } else {
+      navigatePage("/signin");
+    }
   }, []);
   return (
     <Layout>
