@@ -15,9 +15,9 @@ const Input = forwardRef((props, ref) => {
           setIsFocus(true);
         }}
         onBlur={() => {
-          if (value.length) {
+          if (value?.length) {
             setIsFocus(true);
-          } else if (value.length === 0) {
+          } else if (value?.length === 0) {
             setIsFocus(false);
           }
         }}
