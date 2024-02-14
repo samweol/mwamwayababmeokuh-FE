@@ -6,12 +6,17 @@ import { useState } from "react";
 import useNavigatePage from "../../../../hooks/useNavigatePage";
 import { useLocation } from "react-router-dom";
 import { api } from "../../../../api/baseURL";
+import { useSetRecoilState } from "recoil";
+import { userState } from "../../../../recoil/atom";
+import { userData } from "../../../../mock/index";
 
 export default function GetPassword() {
   const [passwordData, setPasswordData] = useState({ pw: "", checkpw: "" });
 
   const location = useLocation();
   const { nickname, email } = location.state;
+
+  const setUser = useSetRecoilState(userState);
 
   const { navigatePage } = useNavigatePage();
 
@@ -27,10 +32,12 @@ export default function GetPassword() {
       });
 
       console.log("🌟회원가입 성공🌟");
+      setUser(userData);
       navigatePage("/select-artist");
     } catch (err) {
       console.error(err);
       console.log("🔥회원가입 실패🔥");
+      setUser({});
     }
   };
   return (

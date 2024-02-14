@@ -47,3 +47,14 @@ export const menuData = [
     onClickHandler: () => {},
   },
 ];
+
+/**
+ * 유저데이터
+ */
+export const userData = {
+  uid: 3,
+  nickname: "삼월",
+  email: "samweol@test.com",
+  bio: null,
+  role: "general",
+};

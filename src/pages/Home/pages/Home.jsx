@@ -9,11 +9,15 @@ import { postData, menuData } from "../../../mock";
 import { useEffect, useState } from "react";
 import BottomModal from "../../../components/BottomModal/BottomModal";
 import Modal from "../../../components/Modal/Modal";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../../recoil/atom";
 
 export default function Home() {
   const [postList, setPostList] = useState([]);
   const [isBottomModalOpen, setIsBottomModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const user = useRecoilValue(userState);
 
   const closeModal = () => {
     setIsBottomModalOpen(false);
