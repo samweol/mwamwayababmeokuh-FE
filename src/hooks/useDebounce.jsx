@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
-export default function useDebounce(value, delay) {
-  const [debounceValue, setDebounceValue] = useState("");
+export default function useDebounce() {
+  const timer = useRef(null);
+
+  const debounce = (callback, time) => {
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      callback();
+      timer.current = null;
+    }, time);
+  };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (value.length) {
-        setDebounceValue(value);
-        console.log("디바운싱 적용중");
-      }
-    }, delay);
-
     return () => {
-      clearTimeout(timer);
+      if (timer.current) clearTimeout(timer);
     };
-  }, [value]);
+  });
 
-  return { debounceValue };
+  return { debounce };
 }

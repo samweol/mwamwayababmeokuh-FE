@@ -13,10 +13,10 @@ import Loading from "../../../components/Loading/Loading";
 
 export default function Search() {
   const [keyword, setKeyword] = useState("");
-  const { debounceValue } = useDebounce(keyword, 3000);
-
   const [artistPostList, setArtistPostList] = useState([]);
   const [hashtagPostList, setHashtagPostList] = useState([]);
+
+  const { debounce } = useDebounce();
 
   const setIsLoading = useSetRecoilState(loadingState);
 
@@ -24,22 +24,20 @@ export default function Search() {
     setKeyword(keyword);
   };
 
-  console.log("debounceValue : ", debounceValue);
-  console.log(artistPostList);
-
   /**
    * 검색 api
    */
-  const searchKeyword = async () => {
+  const searchKeyword = async (keyword) => {
     console.log("searchKeyword function");
-    console.log(`/boards/search-results?searchKeyword=${debounceValue}`);
     try {
       setIsLoading(true);
-      const resp = await api.get(
-        `/boards/search-results?searchKeyword=${debounceValue}`
-      );
+      console.log(keyword);
+      const resp = await api.get(`/boards/search-results`, {
+        params: {
+          searchKeyword: keyword,
+        },
+      });
 
-      console.log("결과");
       console.log(resp.data);
       setArtistPostList(resp.data.byArtist);
       setHashtagPostList(resp.data.byHashtag);
@@ -53,11 +51,15 @@ export default function Search() {
     }
   };
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
-    if (debounceValue.length) {
-      searchKeyword();
+    if (keyword.length) {
+      debounce(() => {
+        searchKeyword(keyword);
+      }, 3000);
     }
-  }, [debounceValue]);
+  }, [keyword]);
 
   return (
     <Layout>
