@@ -54,8 +54,6 @@ export default function WritePost() {
     try {
       setLoading(true);
       const resp = await api.get(`/hashtags/search?hashtag=${debounceValue}`);
-
-      console.log(resp.data);
       setSearchResultList(resp.data);
       console.log("🌟해시태그 조회 성공🌟");
     } catch (err) {
@@ -76,6 +74,8 @@ export default function WritePost() {
     if (!searchResultList.length) {
       await postHashtag();
     }
+
+    setSearchResultList([]);
   };
 
   /**
@@ -101,8 +101,7 @@ export default function WritePost() {
       });
 
       console.log("🌟글쓰기 성공🌟");
-      console.log(resp.data);
-      // navigatePage(`/post/detail/${resp.pid}`, { ...resp.data });
+      navigatePage("/home");
     } catch (err) {
       console.error(err);
       console.log("🔥글쓰기 실패🔥");
@@ -135,6 +134,7 @@ export default function WritePost() {
         <HashTagInput
           searchResultList={searchResultList}
           value={searchKeyword}
+          onHashTagListClickHandler={setSearchKeyword}
           onChangeHandler={(e) => {
             setSearchKeyword(e.target.value);
           }}

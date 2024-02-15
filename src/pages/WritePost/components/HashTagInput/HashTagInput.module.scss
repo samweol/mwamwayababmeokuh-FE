@@ -35,6 +35,12 @@ div.hashtag-cont {
 
     li.search-item {
       padding: 8px 12px;
+      button {
+        color: color.$font-white;
+        padding: 0;
+        width: 100%;
+        text-align: left;
+      }
     }
   }
 
