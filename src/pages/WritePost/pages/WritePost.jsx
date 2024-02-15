@@ -7,10 +7,11 @@ import { useEffect, useState } from "react";
 import HashTagInput from "../components/HashTagInput/HashTagInput";
 import HashTagList from "../components/HashTagList/HashTagList";
 import { api } from "../../../api/baseURL";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../../recoil/atom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { loadingState, userState } from "../../../recoil/atom";
 import useNavigatePage from "../../../hooks/useNavigatePage";
 import useDebounce from "../../../hooks/useDebounce";
+import Loading from "../../../components/Loading/Loading";
 
 export default function WritePost() {
   const [selected, setSelected] = useState({
@@ -25,6 +26,7 @@ export default function WritePost() {
   const { debounceValue } = useDebounce(searchKeyword, 1000);
 
   const user = useRecoilValue(userState);
+  const setLoading = useSetRecoilState(loadingState);
   const { navigatePage } = useNavigatePage();
 
   /**
@@ -32,6 +34,7 @@ export default function WritePost() {
    */
   const postHashtag = async () => {
     try {
+      setLoading(true);
       await api.post("/hashtags", {
         hashtag: debounceValue,
       });
@@ -39,6 +42,8 @@ export default function WritePost() {
     } catch (err) {
       console.error(err);
       console.log("🔥해시태그 추가 실패🔥");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,6 +52,7 @@ export default function WritePost() {
    */
   const searchHashtag = async () => {
     try {
+      setLoading(true);
       const resp = await api.get(`/hashtags/search?hashtag=${debounceValue}`);
 
       console.log(resp.data);
@@ -55,12 +61,13 @@ export default function WritePost() {
     } catch (err) {
       console.error(err);
       console.log("🔥해시태그 조회 실패🔥");
+    } finally {
+      setLoading(false);
     }
   };
 
   /**
    * 해시태그 추가 함수
-   * @param {새로 입력할 해시태그} hashtag
    */
   const addHashTag = async () => {
     setHashtagList([...hashTagList, searchKeyword]);
@@ -71,21 +78,21 @@ export default function WritePost() {
     }
   };
 
+  /**
+   * 해시태그 삭제 함수
+   * @param {삭제할 해시태그} hashtag
+   */
   const deleteHashTag = (hashtag) => {
     const tempHashTagList = hashTagList;
     setHashtagList(tempHashTagList.filter((item) => item != hashtag));
   };
 
+  /**
+   * 글쓰기 api
+   */
   const uploadPost = async () => {
     try {
-      console.log("uploadPost 시작");
-      console.log({
-        aid: selected.aid,
-        hashtag: hashTagList[0],
-        content: content,
-        writer: user.uid,
-      });
-
+      setLoading(true);
       const resp = await api.post("/boards/posts", {
         aid: selected.aid,
         hashtag: hashTagList[0],
@@ -99,6 +106,8 @@ export default function WritePost() {
     } catch (err) {
       console.error(err);
       console.log("🔥글쓰기 실패🔥");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -121,6 +130,7 @@ export default function WritePost() {
           }}
         />
         <HashTagInput
+          searchResultList={searchResultList}
           value={searchKeyword}
           onChangeHandler={(e) => {
             setSearchKeyword(e.target.value);
@@ -132,6 +142,7 @@ export default function WritePost() {
           onDeleteHashTag={deleteHashTag}
         />
       </LayoutContent>
+      <Loading />
     </Layout>
   );
 }

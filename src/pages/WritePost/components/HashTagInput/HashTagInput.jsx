@@ -2,6 +2,12 @@ import styles from "./HashTagInput.module.scss";
 
 export default function HashTagInput(props) {
   const { value, searchResultList, onAddHashTag, onChangeHandler } = props;
+
+  console.log(searchResultList);
+
+  const searchList = searchResultList?.map((item) => (
+    <li className={styles["search-item"]}>{item}</li>
+  ));
   return (
     <div className={styles["hashtag-cont"]}>
       <label className={styles["hashtag-label"]} htmlFor="hashtag">
@@ -18,9 +24,7 @@ export default function HashTagInput(props) {
         <button onClick={onAddHashTag}>+</button>
       </div>
 
-      <ul className={styles["search-list"]}>
-        <li className={styles["search-item"]}>#뫄뫄야_밥먹자</li>
-      </ul>
+      <ul className={styles["search-list"]}>{searchList}</ul>
     </div>
   );
 }
