@@ -112,7 +112,10 @@ export default function WritePost() {
   };
 
   useEffect(() => {
-    searchHashtag();
+    if (!debounceValue.length) {
+    } else {
+      searchHashtag();
+    }
   }, [debounceValue]);
 
   return (

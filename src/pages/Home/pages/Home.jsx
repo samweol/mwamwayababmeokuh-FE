@@ -3,14 +3,16 @@ import MainHeader from "../../../components/Header/MainHeader";
 import Layout from "../../../components/Layout/Layout";
 import LayoutContent from "../../../components/Layout/LayoutContent";
 import Post from "../../../components/Post/Post";
-// import ArtistBadge from "../components/ArtistBadge/ArtistBadge";
 import WriteButton from "../components/WriteButton/WriteButton";
 import { postData, menuData } from "../../../mock";
 import { useEffect, useState } from "react";
 import BottomModal from "../../../components/BottomModal/BottomModal";
 import Modal from "../../../components/Modal/Modal";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../../recoil/atom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { loadingState, userState } from "../../../recoil/atom";
+import { api } from "../../../api/baseURL";
+import Loading from "../../../components/Loading/Loading";
+import ArtistBadgeList from "../components/ArtistBadge/ArtistBadgeList";
 
 export default function Home() {
   const [postList, setPostList] = useState([]);
@@ -18,22 +20,46 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const user = useRecoilValue(userState);
+  const setLoading = useSetRecoilState(loadingState);
+
+  console.log(postList);
+
+  const aid = user.artistDTOList.reduce((acc, cur) => {
+    return acc + cur.aid + ",";
+  }, "");
 
   const closeModal = () => {
     setIsBottomModalOpen(false);
   };
 
+  const fetchPost = async () => {
+    try {
+      console.log("fetchPost");
+      setLoading(true);
+
+      const resp = await api.get(`/boards/posts?aidList=${aid}`);
+      setPostList(resp.data);
+      console.log("🌟게시글 불러오기 성공🌟");
+    } catch (err) {
+      console.error(err);
+      console.log("🔥게시글 불러오기 실패🔥");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    setPostList(postData);
-  }, [postList]);
+    fetchPost();
+  }, []);
+
   return (
     <Layout>
       <MainHeader />
       <LayoutContent>
-        {/* <ArtistBadge artist="레드벨벳" /> */}
-        {postList.map((item) => (
+        <ArtistBadgeList />
+        {postList?.map((item) => (
           <Post
-            key={item.key}
+            key={item.pid}
             post={item}
             line={true}
             onClickMoreButton={() => {
@@ -48,6 +74,7 @@ export default function Home() {
       )}
       {isModalOpen && <Modal />}
       <BottomTab />
+      <Loading />
     </Layout>
   );
 }

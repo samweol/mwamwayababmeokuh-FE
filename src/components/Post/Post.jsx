@@ -27,9 +27,9 @@ export default function Post(props) {
       <div className={styles["post-info-cont"]}>
         <div className={styles["post-header"]}>
           <div className={styles["post-user-info"]}>
-            <span className={styles["user-nickname"]}>{post.userName}</span>
-            <span className={styles["artis-badge"]}>{post.artist}</span>
-            <span className={styles["post-time"]}>{post.updatedAt}</span>
+            <span className={styles["user-nickname"]}>{post.writer}</span>
+            <span className={styles["artis-badge"]}>{post.aid}</span>
+            <span className={styles["post-time"]}>{post.createdAt}</span>
           </div>
           <button className={styles["more-btn"]} onClick={onClickMoreButton}>
             <img src={VerticalMore} alt="더보기 로고" />
@@ -43,7 +43,7 @@ export default function Post(props) {
         >
           <p>{post.content}</p>
           <ul className={styles["post-img-cont"]}>
-            {post.images.map((item) => (
+            {post.images?.map((item) => (
               <li key={item}>이미지</li>
             ))}
           </ul>
