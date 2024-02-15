@@ -8,3 +8,8 @@ export const userState = atom({
   default: {},
   effects_UNSTABLE: [persistAtom],
 });
+
+export const loadingState = atom({
+  key: "loadingState",
+  default: false,
+});
