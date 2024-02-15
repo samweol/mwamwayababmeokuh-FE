@@ -74,7 +74,7 @@ export default function Router() {
       element: <SelectArtist />,
     },
     {
-      path: "/post/detail",
+      path: "/post/detail/:postId",
       element: <PostDetail />,
     },
   ]);
