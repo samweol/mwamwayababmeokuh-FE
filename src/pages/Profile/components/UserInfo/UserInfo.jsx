@@ -3,7 +3,8 @@ import ProfileImage from "../../../../assets/images/image.png";
 import Button from "../../../../components/Button/Button";
 import useNavigatePage from "../../../../hooks/useNavigatePage";
 
-export default function UserInfo() {
+export default function UserInfo(props) {
+  const { user } = props;
   const { navigatePage } = useNavigatePage();
   return (
     <section className={styles["userinfo-cont"]}>
@@ -18,17 +19,15 @@ export default function UserInfo() {
           size="s"
           inversed={true}
           onClickHandler={() => {
-            navigatePage("/profile/edit");
+            navigatePage("/profile/edit", { user });
           }}
         >
           Edit Profile
         </Button>
       </div>
       <div className={styles["user-info"]}>
-        <span className={styles["user-nickname"]}>삼월</span>
-        <p className={styles["user-introduce"]}>
-          왼손엔 정지훈 오른손엔 김민교 나는 왼손잡이
-        </p>
+        <span className={styles["user-nickname"]}>{user.nickname}</span>
+        <p className={styles["user-introduce"]}>{user.bio}</p>
       </div>
     </section>
   );

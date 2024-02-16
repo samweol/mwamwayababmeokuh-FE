@@ -15,6 +15,7 @@ export default function Profile() {
   const [userPostList, setUserPostList] = useState([]);
   const [tabSelected, setTabSelected] = useState("Post");
   const [likeList, setLikeList] = useState([]);
+  const [userData, setUserData] = useState({});
 
   const setIsLoading = useSetRecoilState(loadingState);
 
@@ -40,6 +41,20 @@ export default function Profile() {
   const postListComponent = postList?.map((item) => (
     <Post key={item.pid} post={item} line={true} />
   ));
+
+  const fetchUser = async () => {
+    try {
+      setIsLoading(true);
+      const resp = await api.get(`/users/${params.userId}`);
+      setUserData(resp.data);
+      console.log("🌟유저 정보 불러오기 성공🌟");
+    } catch (err) {
+      console.error(err);
+      console.log("🔥유저 정보 불러오기 실패🔥");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   /**
    * 유저가 작성한 게시글을 불러오는 api
@@ -78,6 +93,7 @@ export default function Profile() {
   };
 
   useEffect(() => {
+    fetchUser();
     fetchUserPost();
     fetchLikePost();
   }, []);
@@ -86,7 +102,7 @@ export default function Profile() {
     <Layout>
       <Header title="삼월" />
       <LayoutContent>
-        <UserInfo />
+        <UserInfo user={userData} />
         <ProfileTab
           tabList={profileTabList}
           selected={tabSelected}
