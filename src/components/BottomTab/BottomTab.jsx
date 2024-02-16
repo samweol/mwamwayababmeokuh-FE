@@ -1,6 +1,9 @@
+import { useRecoilValue } from "recoil";
 import styles from "./BottomTab.module.scss";
+import { userState } from "../../recoil/atom";
 
 export default function BottomTab() {
+  const user = useRecoilValue(userState);
   const tabList = [
     {
       title: "홈",
@@ -16,7 +19,7 @@ export default function BottomTab() {
     },
     {
       title: "프로필",
-      url: "/profile",
+      url: `/profile/${user.uid}`,
     },
   ];
 
