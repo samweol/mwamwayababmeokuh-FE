@@ -23,7 +23,7 @@ export default function WritePost() {
   const [searchResultList, setSearchResultList] = useState([]);
   const [content, setContent] = useState("");
 
-  const { debounceValue } = useDebounce(searchKeyword, 1000);
+  const { debounce } = useDebounce();
 
   const user = useRecoilValue(userState);
   const setLoading = useSetRecoilState(loadingState);
@@ -53,8 +53,12 @@ export default function WritePost() {
   const searchHashtag = async () => {
     try {
       setLoading(true);
-      const resp = await api.get(`/hashtags/search?hashtag=${debounceValue}`);
-      setSearchResultList(resp.data);
+      const resp = await api.get(`/hashtags/search`, {
+        params: {
+          hashtag: searchKeyword,
+        },
+      });
+      console.log(resp.data);
       console.log("🌟해시태그 조회 성공🌟");
     } catch (err) {
       console.error(err);
@@ -111,11 +115,10 @@ export default function WritePost() {
   };
 
   useEffect(() => {
-    if (!debounceValue.length) {
-    } else {
-      searchHashtag();
+    if (searchKeyword.length) {
+      debounce(searchHashtag, 3000);
     }
-  }, [debounceValue]);
+  }, [searchKeyword]);
 
   return (
     <Layout>

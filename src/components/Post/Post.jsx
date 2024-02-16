@@ -5,6 +5,8 @@ import HeartIcon from "../../assets/images/heart.png";
 import VerticalMore from "../../assets/images/more-vertical.png";
 import useNavigatePage from "../../hooks/useNavigatePage";
 import { useEffect, useState } from "react";
+import { elapsedTime } from "../../utils/index";
+
 export default function Post(props) {
   const { post, line, onClickMoreButton } = props;
   const { navigatePage } = useNavigatePage();
@@ -27,9 +29,11 @@ export default function Post(props) {
       <div className={styles["post-info-cont"]}>
         <div className={styles["post-header"]}>
           <div className={styles["post-user-info"]}>
-            <span className={styles["user-nickname"]}>{post.writer}</span>
-            <span className={styles["artis-badge"]}>{post.aid}</span>
-            <span className={styles["post-time"]}>{post.createdAt}</span>
+            <span className={styles["user-nickname"]}>{post.nickname}</span>
+            <span className={styles["artis-badge"]}>{post.name}</span>
+            <span className={styles["post-time"]}>
+              {elapsedTime(post.createdAt)}
+            </span>
           </div>
           <button className={styles["more-btn"]} onClick={onClickMoreButton}>
             <img src={VerticalMore} alt="더보기 로고" />

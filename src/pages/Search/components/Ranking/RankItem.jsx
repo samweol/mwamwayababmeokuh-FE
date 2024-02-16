@@ -7,9 +7,9 @@ export default function RankItem(props) {
     <li className={styles.rankItem} onClick={onClickHandler}>
       <a>
         {tag}
-        <span className={styles.rankItemPosts}>{`${LocalString(
+        {/* <span className={styles.rankItemPosts}>{`${LocalString(
           posts
-        )} posts`}</span>
+        )} posts`}</span> */}
       </a>
     </li>
   );
