@@ -16,7 +16,7 @@ export default function Search() {
   const [keyword, setKeyword] = useState("");
   const [artistPostList, setArtistPostList] = useState([]);
   const [hashtagPostList, setHashtagPostList] = useState([]);
-  const [tabSelected, setTablSelected] = useState("Hashtag");
+  const [tabSelected, setTabSelected] = useState("Hashtag");
   const [rankingList, setRankingList] = useState([]);
 
   const { debounce } = useDebounce();
@@ -106,7 +106,7 @@ export default function Search() {
           <ProfileTab
             tabList={searchTabList}
             selected={tabSelected}
-            onClickHandler={setTablSelected}
+            onClickHandler={setTabSelected}
           />
         ) : null}
         {tabSelected === "Hashtag" ? (

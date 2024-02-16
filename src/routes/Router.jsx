@@ -62,7 +62,7 @@ export default function Router() {
       element: <AddArtist />,
     },
     {
-      path: "/profile",
+      path: "/profile/:userId",
       element: <Profile />,
     },
     {

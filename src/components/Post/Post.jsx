@@ -13,8 +13,6 @@ export default function Post(props) {
 
   const [liked, setLiked] = useState(false);
 
-  console.log(post);
-
   useEffect(() => {
     setLiked(post.liked);
   }, [post.liked]);
