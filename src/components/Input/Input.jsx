@@ -3,14 +3,15 @@ import styles from "./Input.module.scss";
 
 const Input = forwardRef((props, ref) => {
   const [isFocus, setIsFocus] = useState(false);
-  const { value, labelText, onChangeHandler, type, alert, flex } = props;
+  const { value, labelText, defaultValue, onChangeHandler, type, alert, flex } =
+    props;
 
   return (
     <article className={` ${styles["input-article"]} ${flex && styles.flex}`}>
       <div
-        className={` ${styles["input-cont"]} ${isFocus && styles.focused} ${
-          flex && styles.flex
-        }`}
+        className={` ${styles["input-cont"]} ${
+          (isFocus || defaultValue) && styles.focused
+        } ${flex && styles.flex}`}
         onFocus={() => {
           setIsFocus(true);
         }}
@@ -27,6 +28,7 @@ const Input = forwardRef((props, ref) => {
         </label>
         <input
           ref={ref}
+          defaultValue={defaultValue}
           id="input"
           type={type ? type : "text"}
           onChange={onChangeHandler}

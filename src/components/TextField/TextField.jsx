@@ -3,10 +3,12 @@ import styles from "./TextField.module.scss";
 
 const TextField = forwardRef((props, ref) => {
   const [isFocus, setIsFocus] = useState(false);
-  const { value, labelText, onChangeHandler } = props;
+  const { value, defaultValue, labelText, onChangeHandler } = props;
   return (
     <article
-      className={`${styles["textfield-cont"]} ${isFocus && styles.focused}`}
+      className={`${styles["textfield-cont"]} ${
+        (isFocus || defaultValue) && styles.focused
+      }`}
       onFocus={() => {
         setIsFocus(true);
       }}
@@ -19,17 +21,19 @@ const TextField = forwardRef((props, ref) => {
       }}
     >
       <span
-        className={`${styles["textfield-label"]} ${isFocus && styles.focused}`}
+        className={`${styles["textfield-label"]} ${
+          (isFocus || defaultValue) && styles.focused
+        }`}
       >
         {labelText}
       </span>
       <textarea
+        defaultValue={defaultValue}
+        value={value}
         ref={ref}
         className={styles["textfield-input"]}
         onChange={onChangeHandler}
-      >
-        {value}
-      </textarea>
+      ></textarea>
     </article>
   );
 });
