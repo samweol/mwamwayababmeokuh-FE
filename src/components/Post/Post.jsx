@@ -6,16 +6,74 @@ import VerticalMore from "../../assets/images/more-vertical.png";
 import useNavigatePage from "../../hooks/useNavigatePage";
 import { useEffect, useState } from "react";
 import { elapsedTime } from "../../utils/index";
+import { api } from "../../api/baseURL";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { loadingState, userState } from "../../recoil/atom";
 
 export default function Post(props) {
   const { post, line, onClickMoreButton } = props;
-  const { navigatePage } = useNavigatePage();
-
   const [liked, setLiked] = useState(false);
 
+  const { navigatePage } = useNavigatePage();
+
+  const user = useRecoilValue(userState);
+  const setIsLoading = useSetRecoilState(loadingState);
+
+  const fetchLike = async () => {
+    try {
+      setIsLoading(true);
+      const resp = await api.get("/boards/posts/like", {
+        params: {
+          uid: user.uid,
+          pid: post.pid,
+        },
+      });
+
+      if (resp.data.result === "not exist") {
+        setLiked(false);
+      } else {
+        setLiked(true);
+      }
+      console.log("🌟좋아요 여부 조회 성공🌟");
+    } catch (err) {
+      console.error(err);
+      console.log("🔥좋아요 여부 조회 실패🔥");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const toggleLikeBtn = async () => {
+    try {
+      setIsLoading(true);
+      if (liked) {
+        const resp = await api.delete("/boards/posts/like", {
+          data: {
+            uid: user.uid,
+            pid: post.pid,
+          },
+        });
+        setLiked(false);
+      } else {
+        const resp = await api.post("/boards/posts/like", {
+          uid: user.uid,
+          pid: post.pid,
+        });
+        setLiked(true);
+      }
+
+      console.log("🌟좋아요 성공🌟");
+    } catch (err) {
+      console.error(err);
+      console.log("🔥좋아요 실패🔥");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    setLiked(post.liked);
-  }, [post.liked]);
+    fetchLike();
+  }, [liked]);
 
   return (
     <article className={`${styles["post-cont"]} ${line && styles.line}`}>
@@ -58,12 +116,7 @@ export default function Post(props) {
           </ul>
         </div>
         <div className={styles["button-cont"]}>
-          <button
-            className={styles["like-btn"]}
-            onClick={() => {
-              setLiked(!liked);
-            }}
-          >
+          <button className={styles["like-btn"]} onClick={toggleLikeBtn}>
             <img src={liked ? HeartIcon : EmptyHeartIcon} alt="하트 로고" />
           </button>
         </div>

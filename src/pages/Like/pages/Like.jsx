@@ -15,7 +15,7 @@ export default function Like() {
   const [likeList, setLikeList] = useState([]);
 
   const likePostComponent = likeList?.map((item) => (
-    <Post key={item.key} post={item} />
+    <Post key={item.pid} post={item} />
   ));
 
   const fetchLikePost = async () => {
