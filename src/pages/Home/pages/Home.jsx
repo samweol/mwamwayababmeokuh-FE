@@ -30,11 +30,18 @@ export default function Home() {
     setIsBottomModalOpen(false);
   };
 
+  /**
+   * 홈 피드화면 게시글 불러오는 api
+   */
   const fetchPost = async () => {
     try {
       setLoading(true);
 
-      const resp = await api.get(`/boards/posts?aidList=${aid}`);
+      const resp = await api.get(`/boards/posts`, {
+        params: {
+          aidList: aid,
+        },
+      });
       setPostList(resp.data);
       console.log("🌟게시글 불러오기 성공🌟");
     } catch (err) {
