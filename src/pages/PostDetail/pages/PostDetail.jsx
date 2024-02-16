@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 export default function PostDetail() {
   const location = useLocation();
   const { post } = location.state;
+
   return (
     <Layout>
       <Header title="Post" />

@@ -22,6 +22,7 @@ export default function WritePost() {
   const [hashTagList, setHashtagList] = useState([]);
   const [searchResultList, setSearchResultList] = useState([]);
   const [content, setContent] = useState("");
+  const [isHashtagExist, setIsHashtagExist] = useState(true);
 
   const { debounce } = useDebounce();
 
@@ -36,7 +37,7 @@ export default function WritePost() {
     try {
       setLoading(true);
       await api.post("/hashtags", {
-        hashtag: debounceValue,
+        hashtag: searchKeyword,
       });
       console.log("🌟해시태그 추가 성공🌟");
     } catch (err) {
@@ -58,7 +59,9 @@ export default function WritePost() {
           hashtag: searchKeyword,
         },
       });
-      console.log(resp.data);
+      setSearchResultList(resp.data.result);
+      setIsHashtagExist(resp.data.exist);
+
       console.log("🌟해시태그 조회 성공🌟");
     } catch (err) {
       console.error(err);
@@ -75,7 +78,7 @@ export default function WritePost() {
     setHashtagList([...hashTagList, searchKeyword]);
     setSearchKeyword("");
 
-    if (!searchResultList.length) {
+    if (!isHashtagExist) {
       await postHashtag();
     }
 
@@ -105,7 +108,7 @@ export default function WritePost() {
       });
 
       console.log("🌟글쓰기 성공🌟");
-      navigatePage("/home");
+      navigatePage(`/post/detail/${resp.data.pid}`, { post: { ...resp.data } });
     } catch (err) {
       console.error(err);
       console.log("🔥글쓰기 실패🔥");

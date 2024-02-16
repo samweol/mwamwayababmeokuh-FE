@@ -41,7 +41,7 @@ export default function Post(props) {
         </div>
         <div
           onClick={() => {
-            navigatePage(`/post/detail/${post.id}`, { post });
+            navigatePage(`/post/detail/${post.pid}`, { post });
           }}
           className={styles["post-content"]}
         >
