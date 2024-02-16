@@ -22,8 +22,6 @@ export default function Home() {
   const user = useRecoilValue(userState);
   const setLoading = useSetRecoilState(loadingState);
 
-  console.log(postList);
-
   const aid = user.artistDTOList.reduce((acc, cur) => {
     return acc + cur.aid + ",";
   }, "");
@@ -34,7 +32,6 @@ export default function Home() {
 
   const fetchPost = async () => {
     try {
-      console.log("fetchPost");
       setLoading(true);
 
       const resp = await api.get(`/boards/posts?aidList=${aid}`);
