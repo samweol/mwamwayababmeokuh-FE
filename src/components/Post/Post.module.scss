@@ -24,14 +24,23 @@ div.post-info-cont {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
-    span {
-      display: inline-block;
-      padding-right: 8px;
+
+    div.post-user-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     button.more-btn {
       color: color.$font-white;
       padding: 0;
+    }
+
+    span.artist-badge {
+      display: inline-block;
+      background-color: color.$point-color;
+      padding: 4px 8px;
+      border-radius: 4px;
     }
   }
 
@@ -46,6 +55,13 @@ div.post-info-cont {
   }
 
   div.post-content {
+    ul.hashtagCont {
+      padding: 12px 0;
+      li.hashtagItem {
+        color: color.$point-color;
+        font-weight: 700;
+      }
+    }
     ul.post-img-cont {
       margin: 8px 0;
     }

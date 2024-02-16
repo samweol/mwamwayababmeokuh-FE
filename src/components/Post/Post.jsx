@@ -13,6 +13,8 @@ export default function Post(props) {
 
   const [liked, setLiked] = useState(false);
 
+  console.log(post);
+
   useEffect(() => {
     setLiked(post.liked);
   }, [post.liked]);
@@ -30,7 +32,7 @@ export default function Post(props) {
         <div className={styles["post-header"]}>
           <div className={styles["post-user-info"]}>
             <span className={styles["user-nickname"]}>{post.nickname}</span>
-            <span className={styles["artis-badge"]}>{post.name}</span>
+            <span className={styles["artist-badge"]}>{post.name}</span>
             <span className={styles["post-time"]}>
               {elapsedTime(post.createdAt)}
             </span>
@@ -46,6 +48,11 @@ export default function Post(props) {
           className={styles["post-content"]}
         >
           <p>{post.content}</p>
+          <ul className={styles.hashtagCont}>
+            <li className={styles.hashtagItem}>
+              <a>{post.hashtag}</a>
+            </li>
+          </ul>
           <ul className={styles["post-img-cont"]}>
             {post.images?.map((item) => (
               <li key={item}>이미지</li>
