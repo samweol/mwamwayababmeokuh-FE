@@ -1,0 +1,8 @@
+@use "../../../../styles/color";
+
+article.emptyCont {
+  width: 100%;
+  text-align: center;
+  padding-top: 50%;
+  color: color.$font-dark-gray;
+}
