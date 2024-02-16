@@ -10,18 +10,43 @@ import { api } from "../../../api/baseURL";
 import { useSetRecoilState } from "recoil";
 import { loadingState } from "../../../recoil/atom";
 import Loading from "../../../components/Loading/Loading";
+import ProfileTab from "../../Profile/components/ProfileTab/ProfileTab";
 
 export default function Search() {
   const [keyword, setKeyword] = useState("");
   const [artistPostList, setArtistPostList] = useState([]);
   const [hashtagPostList, setHashtagPostList] = useState([]);
+  const [tabSelected, setTablSelected] = useState("Hashtag");
+  const [rankingList, setRankingList] = useState([]);
 
   const { debounce } = useDebounce();
 
   const setIsLoading = useSetRecoilState(loadingState);
 
+  const searchTabList = [
+    { id: 1, label: "Hashtag" },
+    { id: 2, label: "Artist" },
+  ];
+
   const onSelectRankKeyword = (keyword) => {
     setKeyword(keyword);
+  };
+
+  /**
+   * 해시태그 랭킹 조회 api
+   */
+  const fetchRanking = async () => {
+    try {
+      setIsLoading(true);
+      const resp = await api.get("/boards/rankings");
+      console.log("🌟랭킹 조회 성공🌟");
+      setRankingList(resp.data);
+    } catch (err) {
+      console.error(err);
+      console.log("🔥랭킹 조회 실패🔥");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   /**
@@ -51,7 +76,9 @@ export default function Search() {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    fetchRanking();
+  }, []);
 
   useEffect(() => {
     if (keyword.length) {
@@ -74,12 +101,25 @@ export default function Search() {
           setHashtagPostList([]);
         }}
       />
-      <LayoutContent padding={true}>
-        {keyword ? (
-          <SearchResult searchResultList={artistPostList} />
+      <LayoutContent>
+        {keyword.length ? (
+          <ProfileTab
+            tabList={searchTabList}
+            selected={tabSelected}
+            onClickHandler={setTablSelected}
+          />
+        ) : null}
+        {tabSelected === "Hashtag" ? (
+          <SearchResult searchResultList={hashtagPostList} />
         ) : (
-          <Ranking onClickHandler={onSelectRankKeyword} />
+          <SearchResult searchResultList={artistPostList} />
         )}
+        {!keyword.length ? (
+          <Ranking
+            rankingList={rankingList}
+            onClickHandler={onSelectRankKeyword}
+          />
+        ) : null}
       </LayoutContent>
       <BottomTab />
       <Loading />

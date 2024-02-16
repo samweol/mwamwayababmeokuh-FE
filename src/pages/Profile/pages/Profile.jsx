@@ -11,6 +11,25 @@ import { postData } from "../../../mock/index";
 export default function Profile() {
   const [userPostList, setUserPostList] = useState([]);
 
+  const profileTabList = [
+    {
+      id: 1,
+      label: "Post",
+    },
+    {
+      id: 2,
+      label: "Media",
+    },
+    {
+      id: 3,
+      label: "Hashtag",
+    },
+    {
+      id: 4,
+      label: "Like",
+    },
+  ];
+
   useEffect(() => {
     setUserPostList(postData);
   }, [userPostList]);
@@ -19,7 +38,7 @@ export default function Profile() {
       <Header title="삼월" />
       <LayoutContent>
         <UserInfo />
-        <ProfileTab />
+        <ProfileTab tabList={profileTabList} />
         {userPostList.map((item) => (
           <Post key={item.key} post={item} />
         ))}
