@@ -4,15 +4,12 @@
   section.layout {
     display: flex;
     flex-direction: column;
-    background-color: color.$dark-mode-bg;
-    color: color.$font-white;
   }
 }
 
 // 데스크탑 환경
 @media screen and (min-width: 1025px) {
   section.layout {
-    background-color: color.$light-mode-bg;
   }
 }
 
@@ -22,4 +19,7 @@ section.layout {
   min-height: 100vh;
   position: relative;
   padding-bottom: 50px;
+
+  background-color: color.$dark-mode-bg;
+  color: color.$font-white;
 }
