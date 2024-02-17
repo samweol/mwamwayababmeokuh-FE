@@ -7,7 +7,7 @@ import Post from "../../../components/Post/Post";
 import ProfileTab from "../components/ProfileTab/ProfileTab";
 import { useEffect, useState } from "react";
 import { api } from "../../../api/baseURL";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { loadingState, userState } from "../../../recoil/atom";
 import { useParams } from "react-router-dom";
 import BottomModal from "../../../components/BottomModal/BottomModal";
@@ -24,11 +24,79 @@ export default function Profile() {
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   const setIsLoading = useSetRecoilState(loadingState);
-  const setUser = useSetRecoilState(userState);
+  const [user, setUser] = useRecoilState(userState);
 
   const params = useParams();
 
   const { navigatePage } = useNavigatePage();
+
+  /**
+   * 로그아웃 api
+   */
+  const signout = async () => {
+    try {
+      setIsLoading(true);
+      const resp = await api.get("/auth/logout");
+      console.log("🌟로그아웃 성공🌟");
+      setUser({});
+      localStorage.removeItem("recoil-persist");
+      navigatePage("/");
+    } catch (err) {
+      console.error(err);
+      console.log("🔥로그아웃 실패🔥");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  /**
+   * 유저 신고하기 api
+   */
+  const reportUser = async () => {
+    try {
+      setIsLoading(true);
+      const resp = await api.post("/users/report", {
+        reporter: user.uid,
+        reportedUser: userData.uid,
+        reason: "",
+      });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const isSameUser = Boolean(user.uid == userData.uid);
+  const modal = isSameUser
+    ? {
+        modalHeader: "로그아웃",
+        modalContent: "로그아웃하시겠습니까?",
+        modalLeftBtn: {
+          text: "취소",
+          onClickHandler: () => {
+            setIsModalOpened(false);
+          },
+        },
+        modalRightBtn: {
+          text: "로그아웃",
+          onClickHandler: signout,
+        },
+      }
+    : {
+        modalHeader: "신고",
+        modalContent: "신고하시겠습니까?",
+        modalLeftBtn: {
+          text: "취소",
+          onClickHandler: () => {
+            setIsModalOpened(false);
+          },
+        },
+        modalRightBtn: {
+          text: "신고",
+          onClickHandler: reportUser,
+        },
+      };
 
   const profileTabList = [
     {
@@ -50,25 +118,6 @@ export default function Profile() {
   const postListComponent = postList?.map((item) => (
     <Post key={item.pid} post={item} line={true} />
   ));
-
-  /**
-   * 로그아웃 api
-   */
-  const signout = async () => {
-    try {
-      setIsLoading(true);
-      const resp = await api.get("/auth/logout");
-      console.log("🌟로그아웃 성공🌟");
-      setUser({});
-      localStorage.removeItem("recoil-persist");
-      navigatePage("/");
-    } catch (err) {
-      console.error(err);
-      console.log("🔥로그아웃 실패🔥");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   /**
    * 유저 정보 불러오는 api
@@ -132,7 +181,7 @@ export default function Profile() {
   return (
     <Layout>
       <Header
-        title="삼월"
+        title={userData.nickname}
         moreBtn={true}
         onClickHandler={() => {
           setIsBottomModalOpened(true);
@@ -153,32 +202,37 @@ export default function Profile() {
           closeModal={() => {
             setIsBottomModalOpened(false);
           }}
-          menuList={[
-            {
-              key: 1,
-              label: "로그아웃",
-              onClickHandler: () => {
-                setIsModalOpened(true);
-                setIsBottomModalOpened(false);
-              },
-            },
-          ]}
+          menuList={
+            isSameUser
+              ? [
+                  {
+                    key: 1,
+                    label: "로그아웃",
+                    onClickHandler: () => {
+                      setIsModalOpened(true);
+                      setIsBottomModalOpened(false);
+                    },
+                  },
+                ]
+              : [
+                  {
+                    key: 1,
+                    label: "신고하기",
+                    onClickHandler: () => {
+                      setIsModalOpened(true);
+                      setIsBottomModalOpened(false);
+                    },
+                  },
+                ]
+          }
         />
       )}
       {isModalOpened && (
         <Modal
-          modalHeader="로그아웃"
-          modalContent="로그아웃하시겠습니까?"
-          modalLeftBtn={{
-            text: "취소",
-            onClickHandler: () => {
-              setIsModalOpened(false);
-            },
-          }}
-          modalRightBtn={{
-            text: "로그아웃",
-            onClickHandler: signout,
-          }}
+          modalHeader={modal.modalHeader}
+          modalContent={modal.modalContent}
+          modalLeftBtn={modal.modalLeftBtn}
+          modalRightBtn={modal.modalRightBtn}
         />
       )}
       <Loading />
