@@ -55,15 +55,16 @@ div.post-info-cont {
   }
 
   div.post-content {
-    ul.hashtagCont {
-      padding: 12px 0;
-      li.hashtagItem {
-        color: color.$point-color;
-        font-weight: 700;
-      }
+  }
+
+  ul.hashtagCont {
+    padding: 12px 0;
+    li.hashtagItem {
+      color: color.$point-color;
+      font-weight: 700;
     }
-    ul.post-img-cont {
-      margin: 8px 0;
-    }
+  }
+  ul.post-img-cont {
+    margin: 8px 0;
   }
 }

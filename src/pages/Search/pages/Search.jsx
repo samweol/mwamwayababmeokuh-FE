@@ -11,9 +11,13 @@ import { useSetRecoilState } from "recoil";
 import { loadingState } from "../../../recoil/atom";
 import Loading from "../../../components/Loading/Loading";
 import ProfileTab from "../../Profile/components/ProfileTab/ProfileTab";
+import { useLocation } from "react-router-dom";
 
 export default function Search() {
-  const [keyword, setKeyword] = useState("");
+  const location = useLocation();
+  const [keyword, setKeyword] = useState(
+    location.state.keyword ? location.state.keyword : ""
+  );
   const [artistPostList, setArtistPostList] = useState([]);
   const [hashtagPostList, setHashtagPostList] = useState([]);
   const [tabSelected, setTabSelected] = useState("Hashtag");

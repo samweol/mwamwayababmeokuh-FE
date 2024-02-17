@@ -103,17 +103,22 @@ export default function Post(props) {
           className={styles["post-content"]}
         >
           <p>{post.content}</p>
-          <ul className={styles.hashtagCont}>
-            <li className={styles.hashtagItem}>
-              <a>{post.hashtag}</a>
-            </li>
-          </ul>
-          <ul className={styles["post-img-cont"]}>
-            {post.images?.map((item) => (
-              <li key={item}>이미지</li>
-            ))}
-          </ul>
         </div>
+        <ul className={styles.hashtagCont}>
+          <li
+            className={styles.hashtagItem}
+            onClick={() => {
+              navigatePage("/search", { keyword: post.hashtag });
+            }}
+          >
+            {post.hashtag}
+          </li>
+        </ul>
+        <ul className={styles["post-img-cont"]}>
+          {post.images?.map((item) => (
+            <li key={item}>이미지</li>
+          ))}
+        </ul>
         <div className={styles["button-cont"]}>
           <button className={styles["like-btn"]} onClick={toggleLikeBtn}>
             <img src={liked ? HeartIcon : EmptyHeartIcon} alt="하트 로고" />
