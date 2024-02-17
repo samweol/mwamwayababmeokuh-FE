@@ -30,6 +30,8 @@ export default function Home() {
     setIsBottomModalOpen(false);
   };
 
+  console.log(user);
+
   /**
    * 홈 피드화면 게시글 불러오는 api
    */

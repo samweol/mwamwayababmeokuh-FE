@@ -22,12 +22,15 @@ export default function Signin() {
    * 로그인 api
    */
   const signInAPI = async () => {
-    const id = emailRef.current.value;
+    const email = emailRef.current.value;
     const pw = passwordRef.current.value;
 
     try {
-      const user = await api.post("/auth/login", { id, pw });
-      setUser(userData);
+      const resp = await api.post("/auth/login", { email, pw });
+      setUser({
+        ...resp.data.memberDTO,
+        artistDTOList: resp.data.artistDTOList,
+      });
       navigatePage("/home");
       console.log("🌟로그인 성공🌟");
     } catch (err) {
