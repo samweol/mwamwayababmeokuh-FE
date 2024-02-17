@@ -6,7 +6,11 @@ section.badge-cont {
     padding: 4px 8px;
     color: color.$font-white;
     background-color: color.$bg-light-gray;
-    border-radius: 12px;
+    border-radius: 8px;
+  }
+
+  button.badge.selected {
+    background-color: color.$point-color;
   }
 }
 

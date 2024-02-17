@@ -17,6 +17,7 @@ export default function Home() {
   const [postList, setPostList] = useState([]);
   const [isBottomModalOpen, setIsBottomModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selected, setSelected] = useState([]);
   const [postData, setPostData] = useState({
     postId: "",
     writer: "",
@@ -36,6 +37,18 @@ export default function Home() {
 
   const user = useRecoilValue(userState);
   const setIsLoading = useSetRecoilState(loadingState);
+
+  /**
+   * 아티스트 필터링
+   */
+  const filterArtist = (artist) => {
+    if (selected.includes(artist)) {
+      const tempArr = selected.filter((item) => item !== artist);
+      setSelected(tempArr);
+    } else {
+      setSelected([...selected, artist]);
+    }
+  };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -138,10 +151,16 @@ export default function Home() {
           },
         },
       ];
-
-  const aid = user.artistDTOList.reduce((acc, cur) => {
-    return acc + cur.aid + ",";
-  }, "");
+  let aid = "";
+  if (selected.length) {
+    aid = selected.reduce((acc, cur) => {
+      return acc + cur.aid + ",";
+    }, "");
+  } else {
+    aid = user.artistDTOList.reduce((acc, cur) => {
+      return acc + cur.aid + ",";
+    }, "");
+  }
 
   const closeBottomModal = () => {
     setIsBottomModalOpen(false);
@@ -171,13 +190,13 @@ export default function Home() {
 
   useEffect(() => {
     fetchPost();
-  }, []);
+  }, [selected]);
 
   return (
     <Layout>
       <MainHeader />
       <LayoutContent>
-        <ArtistBadgeList />
+        <ArtistBadgeList selected={selected} onClickHandler={filterArtist} />
         {postList?.map((item) => (
           <Post
             key={item.pid}
