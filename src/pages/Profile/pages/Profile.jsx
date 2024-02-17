@@ -8,18 +8,27 @@ import ProfileTab from "../components/ProfileTab/ProfileTab";
 import { useEffect, useState } from "react";
 import { api } from "../../../api/baseURL";
 import { useSetRecoilState } from "recoil";
-import { loadingState } from "../../../recoil/atom";
+import { loadingState, userState } from "../../../recoil/atom";
 import { useParams } from "react-router-dom";
+import BottomModal from "../../../components/BottomModal/BottomModal";
+import Modal from "../../../components/Modal/Modal";
+import useNavigatePage from "../../../hooks/useNavigatePage";
+import Loading from "../../../components/Loading/Loading";
 
 export default function Profile() {
   const [userPostList, setUserPostList] = useState([]);
   const [tabSelected, setTabSelected] = useState("Post");
   const [likeList, setLikeList] = useState([]);
   const [userData, setUserData] = useState({});
+  const [isBottomModalOpened, setIsBottomModalOpened] = useState(false);
+  const [isModalOpened, setIsModalOpened] = useState(false);
 
   const setIsLoading = useSetRecoilState(loadingState);
+  const setUser = useSetRecoilState(userState);
 
   const params = useParams();
+
+  const { navigatePage } = useNavigatePage();
 
   const profileTabList = [
     {
@@ -42,6 +51,28 @@ export default function Profile() {
     <Post key={item.pid} post={item} line={true} />
   ));
 
+  /**
+   * 로그아웃 api
+   */
+  const signout = async () => {
+    try {
+      setIsLoading(true);
+      const resp = await api.get("/auth/logout");
+      console.log("🌟로그아웃 성공🌟");
+      setUser({});
+      localStorage.removeItem("recoil-persist");
+      navigatePage("/");
+    } catch (err) {
+      console.error(err);
+      console.log("🔥로그아웃 실패🔥");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  /**
+   * 유저 정보 불러오는 api
+   */
   const fetchUser = async () => {
     try {
       setIsLoading(true);
@@ -100,7 +131,13 @@ export default function Profile() {
 
   return (
     <Layout>
-      <Header title="삼월" />
+      <Header
+        title="삼월"
+        moreBtn={true}
+        onClickHandler={() => {
+          setIsBottomModalOpened(true);
+        }}
+      />
       <LayoutContent>
         <UserInfo user={userData} />
         <ProfileTab
@@ -111,6 +148,40 @@ export default function Profile() {
         {postListComponent}
       </LayoutContent>
       <BottomTab />
+      {isBottomModalOpened && (
+        <BottomModal
+          closeModal={() => {
+            setIsBottomModalOpened(false);
+          }}
+          menuList={[
+            {
+              key: 1,
+              label: "로그아웃",
+              onClickHandler: () => {
+                setIsModalOpened(true);
+                setIsBottomModalOpened(false);
+              },
+            },
+          ]}
+        />
+      )}
+      {isModalOpened && (
+        <Modal
+          modalHeader="로그아웃"
+          modalContent="로그아웃하시겠습니까?"
+          modalLeftBtn={{
+            text: "취소",
+            onClickHandler: () => {
+              setIsModalOpened(false);
+            },
+          }}
+          modalRightBtn={{
+            text: "로그아웃",
+            onClickHandler: signout,
+          }}
+        />
+      )}
+      <Loading />
     </Layout>
   );
 }
