@@ -5,6 +5,7 @@ import { useRef } from "react";
 export default function BottomModal(props) {
   const { menuList, closeModal } = props;
   const modalRef = useRef(null);
+
   return (
     <div
       className={styles.modalBg}

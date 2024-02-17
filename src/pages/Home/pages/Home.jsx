@@ -4,7 +4,6 @@ import Layout from "../../../components/Layout/Layout";
 import LayoutContent from "../../../components/Layout/LayoutContent";
 import Post from "../../../components/Post/Post";
 import WriteButton from "../components/WriteButton/WriteButton";
-import { postData, menuData } from "../../../mock";
 import { useEffect, useState } from "react";
 import BottomModal from "../../../components/BottomModal/BottomModal";
 import Modal from "../../../components/Modal/Modal";
@@ -18,15 +17,87 @@ export default function Home() {
   const [postList, setPostList] = useState([]);
   const [isBottomModalOpen, setIsBottomModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [postId, setPostId] = useState("");
+  const [modal, setModal] = useState({
+    modalHeader: "",
+    modalContent: "",
+    modalLeftBtn: {
+      text: "",
+      onClickHandler: () => {},
+    },
+    modalRightBtn: {
+      text: "",
+      onClickHandler: () => {},
+    },
+  });
 
   const user = useRecoilValue(userState);
-  const setLoading = useSetRecoilState(loadingState);
+  const setIsLoading = useSetRecoilState(loadingState);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const deletePost = async () => {
+    try {
+      setIsLoading(true);
+      await api.delete(`/boards/posts/${postId}`);
+      setIsModalOpen(false);
+      console.log("🌟게시글 삭제 성공🌟");
+    } catch (err) {
+      console.error(err);
+      console.log("🔥게시글 삭제 실패🔥");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const menuData = [
+    {
+      key: 1,
+      label: "삭제하기",
+      onClickHandler: () => {
+        setIsModalOpen(true);
+        setModal({
+          modalHeader: "삭제",
+          modalContent: "게시글을 삭제하시겠습니까?",
+          modalLeftBtn: {
+            text: "취소",
+            onClickHandler: closeModal,
+          },
+          modalRightBtn: {
+            text: "삭제",
+            onClickHandler: deletePost,
+          },
+        });
+      },
+    },
+    {
+      key: 2,
+      label: "수정하기",
+      onClickHandler: () => {
+        setIsModalOpen(true);
+        setModal({
+          modalHeader: "수정",
+          modalContent: "게시글을 수정하시겠습니까?",
+          modalLeftBtn: {
+            text: "취소",
+            onClickHandler: closeModal,
+          },
+          modalRightBtn: {
+            text: "수정",
+            onClickHandler: () => {},
+          },
+        });
+      },
+    },
+  ];
 
   const aid = user.artistDTOList.reduce((acc, cur) => {
     return acc + cur.aid + ",";
   }, "");
 
-  const closeModal = () => {
+  const closeBottomModal = () => {
     setIsBottomModalOpen(false);
   };
 
@@ -35,7 +106,7 @@ export default function Home() {
    */
   const fetchPost = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
 
       const resp = await api.get(`/boards/posts`, {
         params: {
@@ -48,7 +119,7 @@ export default function Home() {
       console.error(err);
       console.log("🔥게시글 불러오기 실패🔥");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -68,15 +139,23 @@ export default function Home() {
             line={true}
             onClickMoreButton={() => {
               setIsBottomModalOpen(true);
+              setPostId(item.pid);
             }}
           />
         ))}
         <WriteButton />
       </LayoutContent>
       {isBottomModalOpen && (
-        <BottomModal menuList={menuData} closeModal={closeModal} />
+        <BottomModal menuList={menuData} closeModal={closeBottomModal} />
       )}
-      {isModalOpen && <Modal />}
+      {isModalOpen && (
+        <Modal
+          modalHeader={modal.modalHeader}
+          modalContent={modal.modalContent}
+          modalLeftBtn={modal.modalLeftBtn}
+          modalRightBtn={modal.modalRightBtn}
+        />
+      )}
       <BottomTab />
       <Loading />
     </Layout>

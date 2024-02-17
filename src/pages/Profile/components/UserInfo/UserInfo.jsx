@@ -6,6 +6,11 @@ import useNavigatePage from "../../../../hooks/useNavigatePage";
 export default function UserInfo(props) {
   const { user } = props;
   const { navigatePage } = useNavigatePage();
+  const artistList = user.artistDTOList?.map((item) => (
+    <li className={styles.artistItem} key={item.aid}>
+      {item.name}
+    </li>
+  ));
   return (
     <section className={styles["userinfo-cont"]}>
       <div className={styles["user-edit"]}>
@@ -27,6 +32,7 @@ export default function UserInfo(props) {
       </div>
       <div className={styles["user-info"]}>
         <span className={styles["user-nickname"]}>{user.nickname}</span>
+        <ul className={styles.artistList}>{artistList}</ul>
         <p className={styles["user-introduce"]}>{user.bio}</p>
       </div>
     </section>
