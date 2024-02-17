@@ -28,11 +28,10 @@ export default function Post(props) {
           pid: post.pid,
         },
       });
-
-      if (resp.data.result === "not exist") {
-        setLiked(false);
-      } else {
+      if (resp.data.isLiked) {
         setLiked(true);
+      } else {
+        setLiked(false);
       }
       console.log("🌟좋아요 여부 조회 성공🌟");
     } catch (err) {

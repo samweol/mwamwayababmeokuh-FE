@@ -4,7 +4,7 @@ import Layout from "../../../components/Layout/Layout";
 import LayoutContent from "../../../components/Layout/LayoutContent";
 import Post from "../../../components/Post/Post";
 import WriteButton from "../components/WriteButton/WriteButton";
-import { postData, menuData } from "../../../mock";
+import { menuData } from "../../../mock";
 import { useEffect, useState } from "react";
 import BottomModal from "../../../components/BottomModal/BottomModal";
 import Modal from "../../../components/Modal/Modal";
@@ -29,8 +29,6 @@ export default function Home() {
   const closeModal = () => {
     setIsBottomModalOpen(false);
   };
-
-  console.log(user);
 
   /**
    * 홈 피드화면 게시글 불러오는 api
