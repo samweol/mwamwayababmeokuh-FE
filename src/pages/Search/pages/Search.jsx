@@ -16,7 +16,7 @@ import { useLocation } from "react-router-dom";
 export default function Search() {
   const location = useLocation();
   const [keyword, setKeyword] = useState(
-    location.state.keyword ? location.state.keyword : ""
+    location.state ? location.state.keyword : ""
   );
   const [artistPostList, setArtistPostList] = useState([]);
   const [hashtagPostList, setHashtagPostList] = useState([]);

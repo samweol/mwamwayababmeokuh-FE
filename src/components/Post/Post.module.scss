@@ -10,6 +10,11 @@ article.post-cont.line {
   border-bottom: 1px solid color.$border-dark-gray;
 }
 
+button.profile-img-cont {
+  padding: 0;
+  display: flex;
+}
+
 img.profile-img {
   width: 50px;
   height: 50px;

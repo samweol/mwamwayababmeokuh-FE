@@ -76,13 +76,18 @@ export default function Post(props) {
 
   return (
     <article className={`${styles["post-cont"]} ${line && styles.line}`}>
-      <div className={styles["profile-img-cont"]}>
+      <button
+        className={styles["profile-img-cont"]}
+        onClick={() => {
+          navigatePage(`/profile/${post.writer}`);
+        }}
+      >
         <img
           className={styles["profile-img"]}
           src={ProfileImage}
           alt="유저의 프로필 이미지"
         />
-      </div>
+      </button>
       <div className={styles["post-info-cont"]}>
         <div className={styles["post-header"]}>
           <div className={styles["post-user-info"]}>
