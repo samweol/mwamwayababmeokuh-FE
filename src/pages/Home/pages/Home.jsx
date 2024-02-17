@@ -17,7 +17,10 @@ export default function Home() {
   const [postList, setPostList] = useState([]);
   const [isBottomModalOpen, setIsBottomModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [postId, setPostId] = useState("");
+  const [postData, setPostData] = useState({
+    postId: "",
+    writer: "",
+  });
   const [modal, setModal] = useState({
     modalHeader: "",
     modalContent: "",
@@ -38,10 +41,13 @@ export default function Home() {
     setIsModalOpen(false);
   };
 
+  /**
+   * 게시글 삭제 api
+   */
   const deletePost = async () => {
     try {
       setIsLoading(true);
-      await api.delete(`/boards/posts/${postId}`);
+      await api.delete(`/boards/posts/${postData.postId}`);
       setIsModalOpen(false);
       console.log("🌟게시글 삭제 성공🌟");
     } catch (err) {
@@ -52,46 +58,86 @@ export default function Home() {
     }
   };
 
-  const menuData = [
-    {
-      key: 1,
-      label: "삭제하기",
-      onClickHandler: () => {
-        setIsModalOpen(true);
-        setModal({
-          modalHeader: "삭제",
-          modalContent: "게시글을 삭제하시겠습니까?",
-          modalLeftBtn: {
-            text: "취소",
-            onClickHandler: closeModal,
+  /**
+   * 게시글 신고 api
+   */
+  const reportPost = async () => {
+    try {
+      await api.post("/boards/posts/report", {
+        reporter: user.uid,
+        reportedPost: postData.postId,
+        reason: "",
+      });
+      console.log("🌟게시글 신고 성공🌟");
+    } catch (err) {
+      console.error(err);
+      console.log("🔥게시글 신고 실패🔥");
+    }
+  };
+
+  const isSameUser = Boolean(postData.writer == user.uid);
+  const menuData = isSameUser
+    ? [
+        {
+          key: 1,
+          label: "삭제하기",
+          onClickHandler: () => {
+            setIsModalOpen(true);
+            setModal({
+              modalHeader: "삭제",
+              modalContent: "게시글을 삭제하시겠습니까?",
+              modalLeftBtn: {
+                text: "취소",
+                onClickHandler: closeModal,
+              },
+              modalRightBtn: {
+                text: "삭제",
+                onClickHandler: deletePost,
+              },
+            });
           },
-          modalRightBtn: {
-            text: "삭제",
-            onClickHandler: deletePost,
+        },
+        {
+          key: 2,
+          label: "수정하기",
+          onClickHandler: () => {
+            setIsModalOpen(true);
+            setModal({
+              modalHeader: "수정",
+              modalContent: "게시글을 수정하시겠습니까?",
+              modalLeftBtn: {
+                text: "취소",
+                onClickHandler: closeModal,
+              },
+              modalRightBtn: {
+                text: "수정",
+                onClickHandler: () => {},
+              },
+            });
           },
-        });
-      },
-    },
-    {
-      key: 2,
-      label: "수정하기",
-      onClickHandler: () => {
-        setIsModalOpen(true);
-        setModal({
-          modalHeader: "수정",
-          modalContent: "게시글을 수정하시겠습니까?",
-          modalLeftBtn: {
-            text: "취소",
-            onClickHandler: closeModal,
+        },
+      ]
+    : [
+        {
+          key: 1,
+          label: "신고하기",
+          onClickHandler: () => {
+            setIsModalOpen(true);
+            setModal({
+              modalHeader: "신고",
+              modalContent: "게시글을 신고하시겠습니까?",
+              modalLeftBtn: {
+                text: "취소",
+                onClickHandler: closeModal,
+              },
+              modalRightBtn: {
+                text: "신고",
+                onClickHandler: reportPost,
+              },
+            });
           },
-          modalRightBtn: {
-            text: "수정",
-            onClickHandler: () => {},
-          },
-        });
-      },
-    },
-  ];
+        },
+      ];
 
   const aid = user.artistDTOList.reduce((acc, cur) => {
     return acc + cur.aid + ",";
@@ -139,7 +185,7 @@ export default function Home() {
             line={true}
             onClickMoreButton={() => {
               setIsBottomModalOpen(true);
-              setPostId(item.pid);
+              setPostData({ writer: item.writer, postId: item.pid });
             }}
           />
         ))}
