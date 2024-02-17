@@ -2,7 +2,8 @@ import styles from "./NoneArtist.module.scss";
 import Button from "../../../../components/Button/Button";
 import useNavigatePage from "../../../../hooks/useNavigatePage";
 
-export default function NoneArtist() {
+export default function NoneArtist(props) {
+  const { keyword } = props;
   const { navigatePage } = useNavigatePage();
   return (
     <article className={styles["noneartist-cont"]}>
@@ -11,7 +12,7 @@ export default function NoneArtist() {
       </p>
       <Button
         onClickHandler={() => {
-          navigatePage("/signup/add-artist");
+          navigatePage("/signup/add-artist", { artist: keyword });
         }}
       >
         추가하기

@@ -1,29 +1,55 @@
 import { useEffect, useState } from "react";
 import Layout from "../../../components/Layout/Layout";
-import SearchBar from "../../../components/SearchBar/SearchBar";
 import Button from "../../../components/Button/Button";
 import NoneArtist from "../components/NoneArtist/NoneArtist";
 import useNavigatePage from "../../../hooks/useNavigatePage";
 import LayoutContent from "../../../components/Layout/LayoutContent";
 import { api } from "../../../api/baseURL";
 import useDebounce from "../../../hooks/useDebounce";
+import ArtisList from "../components/ArtistList/ArtisList";
+import SearchHeader from "../../../components/Header/SearchHeader";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { loadingState, userState } from "../../../recoil/atom";
 
 export default function SelectArtis() {
   const [keyword, setKeyword] = useState("");
   const [artists, setArtists] = useState([]);
   const [selected, setSelected] = useState([]);
+
   const { navigatePage } = useNavigatePage();
-  const { debounceValue } = useDebounce(keyword, 200);
+  const { debounce } = useDebounce();
+
+  const [user, setUser] = useRecoilState(userState);
+  const setIsLoading = useSetRecoilState(loadingState);
+
+  const selectArtistBadge = (artist) => {
+    if (selected.includes(artist)) {
+      const tempArr = selected.filter((item) => artist.aid !== item.aid);
+      setSelected(tempArr);
+    } else {
+      setSelected([...selected, artist]);
+    }
+  };
 
   /**
    * 아티스트 검색 api
    */
-  const searchArtist = async () => {
+  const searchArtist = async (keyword) => {
     try {
-      await api.get(`/artists/search?name=${debounceValue}`);
-      setArtists([]);
+      setIsLoading(true);
+      const resp = await api.get("/artists/search", {
+        params: {
+          name: keyword,
+        },
+      });
+      console.log("🌟아티스트 검색 성공🌟");
+      setArtists(resp.data);
     } catch (err) {
       console.error(err);
+      console.log("🔥아티스트 검색 실패🔥");
+      searchArtist([]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -32,10 +58,12 @@ export default function SelectArtis() {
    */
   const fetchArtist = async () => {
     try {
-      const artistList = await api.get("/artists");
-      setArtists(artistList);
+      const resp = await api.get("/artists");
+      console.log("🌟아티스트 조회 성공🌟");
+      setArtists(resp.data);
     } catch (err) {
       console.error(err);
+      console.log("🔥아티스트 조회 실패🔥");
     }
   };
 
@@ -44,12 +72,19 @@ export default function SelectArtis() {
    */
   const addFavoriteArtist = async () => {
     try {
-      await api.post("/artists/favorites", {
-        uid: "",
-        aid: selected,
+      setIsLoading(true);
+      const aidArr = selected.map((item) => item.aid);
+      const resp = await api.post("/artists/favorites", {
+        uid: user.uid,
+        aid: aidArr,
       });
+      console.log("🌟아티스트 추가 성공🌟");
+      navigatePage("/home");
     } catch (err) {
       console.error(err);
+      console.log("🔥아티스트 추가 실패🔥");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -58,23 +93,41 @@ export default function SelectArtis() {
   }, []);
 
   useEffect(() => {
-    searchArtist();
-  }, [debounceValue]);
+    if (keyword.length) {
+      debounce(() => {
+        searchArtist(keyword);
+      }, 3000);
+    } else {
+      fetchArtist();
+    }
+  }, [keyword]);
 
   return (
     <Layout>
       <LayoutContent padding={true}>
-        <SearchBar
+        <SearchHeader
           keyword={keyword}
           onChangeHandler={(e) => {
             setKeyword(e.target.value);
           }}
         />
-        {artists.length ? null : <NoneArtist />}
+        {artists.length ? (
+          <ArtisList
+            artistList={artists}
+            selected={selected}
+            onClickHandler={selectArtistBadge}
+          />
+        ) : (
+          <NoneArtist keyword={keyword} />
+        )}
         <Button
           bottomFixed={true}
           onClickHandler={() => {
-            navigatePage("/home");
+            if (selected.length) {
+              addFavoriteArtist();
+            } else {
+              navigatePage("/home");
+            }
           }}
         >
           {selected.length ? "Add" : "Skip"}
