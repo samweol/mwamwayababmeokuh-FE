@@ -1,0 +1,21 @@
+@use "../../../../styles/color";
+
+ul.artistList {
+  margin: 8px 0;
+  display: flex;
+  li.artistItem {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    margin-right: 8px;
+    padding: 4px 8px;
+    background-color: color.$point-color;
+
+    button {
+      padding: 0;
+      img {
+        padding-top: 4px;
+      }
+    }
+  }
+}

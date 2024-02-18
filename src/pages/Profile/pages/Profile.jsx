@@ -30,8 +30,6 @@ export default function Profile() {
 
   const { navigatePage } = useNavigatePage();
 
-  console.log(userData);
-
   /**
    * 로그아웃 api
    */

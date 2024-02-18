@@ -10,6 +10,8 @@ import { loadingState, userState } from "../../../recoil/atom";
 import { api } from "../../../api/baseURL";
 import useNavigatePage from "../../../hooks/useNavigatePage";
 import { useLocation } from "react-router-dom";
+import HashTagList from "../../WritePost/components/HashTagList/HashTagList";
+import ArtistList from "../components/ArtistList/ArtistList";
 
 export default function EditProfile() {
   const location = useLocation();
@@ -21,6 +23,7 @@ export default function EditProfile() {
     image: "",
     nickname: location.state.user.nickname,
     bio: location.state.user.bio,
+    artist: location.state.user.artistDTOList,
   });
 
   const { navigatePage } = useNavigatePage();
@@ -44,6 +47,11 @@ export default function EditProfile() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const deleteArtist = (aid) => {
+    const tempArr = userData.artist.filter((item) => item.aid !== aid);
+    setUserData({ ...userData, artist: tempArr });
   };
 
   return (
@@ -72,6 +80,7 @@ export default function EditProfile() {
             setUserData({ ...userData, bio: e.target.value });
           }}
         />
+        <ArtistList artist={userData.artist} onDeleteHandler={deleteArtist} />
       </LayoutContent>
     </Layout>
   );
