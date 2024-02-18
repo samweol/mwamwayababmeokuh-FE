@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Button from "../../../components/Button/Button";
 import Input from "../../../components/Input/Input";
 import Layout from "../../../components/Layout/Layout";
@@ -8,11 +8,12 @@ import LayoutContent from "../../../components/Layout/LayoutContent";
 import { api } from "../../../api/baseURL";
 import { useSetRecoilState } from "recoil";
 import { userState } from "../../../recoil/atom";
-import { userData } from "../../../mock/index";
 
 export default function Signin() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+
+  const [alert, setAlert] = useState("");
 
   const setUser = useSetRecoilState(userState);
 
@@ -31,11 +32,13 @@ export default function Signin() {
         ...resp.data.memberDTO,
         artistDTOList: resp.data.artistDTOList,
       });
-      navigatePage("/home");
       console.log("🌟로그인 성공🌟");
+      setAlert("");
+      navigatePage("/home");
     } catch (err) {
       console.error(err);
       setUser({});
+      setAlert("이메일과 비밀번호를 다시 확인해주세요.");
       console.log("🔥로그인 실패🔥");
     }
   };
@@ -46,7 +49,12 @@ export default function Signin() {
         <Button>Sign in with Goggle</Button>
         <Button>Sign in with Apple</Button>
         <Input ref={emailRef} labelText="email" />
-        <Input ref={passwordRef} labelText="password" type="password" />
+        <Input
+          ref={passwordRef}
+          labelText="password"
+          type="password"
+          alert={alert}
+        />
         <Button onClickHandler={signInAPI}>Signin</Button>
         <Button
           inversed={true}
