@@ -30,6 +30,8 @@ export default function Profile() {
 
   const { navigatePage } = useNavigatePage();
 
+  console.log(userData);
+
   /**
    * 로그아웃 api
    */
@@ -126,7 +128,10 @@ export default function Profile() {
     try {
       setIsLoading(true);
       const resp = await api.get(`/users/${params.userId}`);
-      setUserData(resp.data);
+      setUserData({
+        ...resp.data.memberDTO,
+        artistDTOList: resp.data.artistDTOList,
+      });
       console.log("🌟유저 정보 불러오기 성공🌟");
     } catch (err) {
       console.error(err);
