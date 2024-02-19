@@ -4,6 +4,7 @@
 </div>
 
 <div align="center">
+<img src="./src//assets//docs/mainImage.png" />
 좋아하는 아티스트에게 <strong>해시태그</strong>를 사용해 맛집을 공유하세요.
 </div>
 
