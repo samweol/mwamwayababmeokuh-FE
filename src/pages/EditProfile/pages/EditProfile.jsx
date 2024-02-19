@@ -10,7 +10,6 @@ import { loadingState, userState } from "../../../recoil/atom";
 import { api } from "../../../api/baseURL";
 import useNavigatePage from "../../../hooks/useNavigatePage";
 import { useLocation } from "react-router-dom";
-import HashTagList from "../../WritePost/components/HashTagList/HashTagList";
 import ArtistList from "../components/ArtistList/ArtistList";
 
 export default function EditProfile() {
@@ -28,6 +27,10 @@ export default function EditProfile() {
 
   const { navigatePage } = useNavigatePage();
 
+  const aid = userData.artist.reduce((acc, cur) => {
+    return acc + cur.aid + ",";
+  }, "");
+
   /**
    * 프로필 수정 api
    */
@@ -38,6 +41,7 @@ export default function EditProfile() {
         uid: user.uid,
         nickname: userData.nickname,
         bio: userData.bio,
+        aid,
       });
       console.log("🌟마이프로필 수정 성공🌟");
       navigatePage(`/profile/${user.uid}`);
