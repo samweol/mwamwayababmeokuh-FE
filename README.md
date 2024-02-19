@@ -17,7 +17,6 @@
 </div>
 
 <div align="center" style="background-color: gray;margin-top: 12px">
-프로젝트 기간 : 2023.12 - 2024.02
 </div>
 
 ## 1. 서비스 소개
@@ -53,7 +52,12 @@
 
 ## 4. 기술스택
 
-<p></p>
+| Front                 | Back     |
+| --------------------- | -------- |
+| - JS + React + Vite   | - Java   |
+| - Sass                | - MySQL  |
+| - Recoil              | - Spring |
+| - React-router, Axios | -        |
 
 ## 5. 주요기능 소개
 
@@ -97,16 +101,27 @@
 
 ## 6. 핵심코드
 
-<p></p>
+### Front
+
+### Back
 
 ## 7. 트러블 슈팅
 
-<p></p>
+### Front
+
+### Back
 
 ## 8.느낀점
 
-<p></p>
+<p>
+    [Front] 서주예 : 
+</p>
+<p>
+    [Back] 위서영 : 
+</p>
 
 ## 9.리팩토링
 
-<p></p>
+### Front
+
+### Back
