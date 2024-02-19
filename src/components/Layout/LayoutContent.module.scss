@@ -2,8 +2,6 @@
 // 모바일 환경
 @media screen and (max-width: 768px) {
   section.layout-content {
-    display: flex;
-    flex-direction: column;
   }
 }
 
@@ -20,6 +18,8 @@ section.layout-content {
   position: relative;
   background-color: color.$dark-mode-bg;
   color: color.$font-white;
+  display: flex;
+  flex-direction: column;
 }
 
 section.layout-content.padding {
