@@ -8,6 +8,7 @@ import LayoutContent from "../../../components/Layout/LayoutContent";
 import { api } from "../../../api/baseURL";
 import { useSetRecoilState } from "recoil";
 import { userState } from "../../../recoil/atom";
+import MainLogo from "../../../components/MainLogo/MainLogo";
 
 export default function Signin() {
   const emailRef = useRef(null);

@@ -16,3 +16,10 @@ nav ul.tab-list {
   justify-content: space-between;
   align-items: center;
 }
+
+// 데스크탑 환경
+@media screen and (min-width: 1025px) {
+  nav.bottomtab {
+    width: calc(100% - 480px);
+  }
+}
