@@ -159,6 +159,82 @@ export default function useDebounce() {
 
 ### Back
 
+#### **6-2 Spring Data JPA를 이용한 DB 조작**
+
+JPA는 객체와 관계형 데이터베이스의 데이터를 매핑한다. 테이블에 대응되는 entity 객체를 만들면 JPA는 이 객체를 분석해서 sql문을 자동으로 생성하여 DB를 조작하므로 직접 sql문을 작성하지 않고도 데이터의 CRUD가 가능하다.
+이 프로젝트에서는 Spring Data JPA에서 제공하는 `JPARepository`를 사용하여 `EntityManage`r를 별도로 설정하지 않고 JPA를 사용했다. 또한 `JPARepository`에는 `save()`, `findById()` 등의 기본적인 저장, 조회에 대한 메소드가 구현되어 있어서 반복적인 코드 작성을 피할 수 있었다.
+
+```java
+//DB의 사용자 정보 테이블에 대응되는 Member Entity
+
+@Entity
+@Table(name = "users")
+public class Member{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "UID")
+    private long uid;
+    private String nickname;
+    private String email;
+    private String pw;
+    private String bio;
+    private String role;
+
+}
+```
+
+```java
+//Member entity를 이용하여 사용자 정보 테이블을 조작하는 MemberRepository
+
+import com.mwamwayababmeokuh.mwamwa.domain.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface MemberRepository extends JpaRepository<Member, Long> {
+
+    Optional<Member> findByEmail(String searchKeyword);
+    Optional<Member> findByEmailAndPw(String email, String pw);
+}
+```
+
+테이블의 기본키가 아닌 이메일이나 비밀번호 등의 값으로 사용자를 조회하고자 할 때는 `findBy{컬럼이름}`으로 메소드 이름을 작성했다. 이 규칙에 따라서 메소드 이름을 작성하면 JPA가 해당 컬럼 값으로 데이터를 조회하는 쿼리문을 생성하므로 함수를 구현하지 않고도 데이터를 조회할 수 있다.
+
+#### \*\* 6-3 더티 체킹을 통한 데이터 업데이트
+
+사용자나 게시글 등의 데이터를 업데이트해야 하는데 JPA에서는 업데이트 메소드를 지원하지 않으므로 더티 체킹 방식으로 DB에 변경 사항을 반영했다.
+
+```java
+@Service
+@Slf4j
+@Transactional
+public class BoardService {
+
+    @Autowired
+    BoardRepository boardRepository;
+    private final ModelMapper modelMapper = new ModelMapper();
+
+    ...
+
+    public PostDTO update(PostDTO postDTO) {
+        log.info("update()" + postDTO.toString());
+        Optional<Post> optionalPost = boardRepository.findById(postDTO.getPid());
+        Post post = optionalPost.orElseThrow(NoSuchElementException::new);
+        post.setAid(postDTO.getAid());
+        post.setHashtag(postDTO.getHashtag());
+        post.setContent(postDTO.getContent());
+        post.setLng(postDTO.getLng());
+        post.setLat(postDTO.getLat());
+        return modelMapper.map(post, PostDTO.class);
+    }
+
+		...
+}
+```
+
+위의 코드는 게시글 수정을 담당하는 update 메소드를 구현한 코드이다. 우선 게시글의 아이디를 이용해서 수정할 게시글을 검색하여 entity 객체를 생성했다. 그리고 setter를 이용해서 entity의 값을 전달 받은 값으로 변경했다. 변경된 값을 modelMapper를 이용해서 DTO 객체로 변환하여 반환하고 함수는 종료된다. `@Transactional` 어노테이션에 의해서 이 함수에는 트랜잭션이 적용되어 있으므로 함수가 종료된 후에 변경 사항이 데이터베이스에 반영된다.
+
 ## 7. 트러블 슈팅
 
 ### Front
@@ -199,13 +275,61 @@ await api.get("/boards/posts/like", {
 
 ### Back
 
+#### **7-3 Spring Boot 3.x 버전에서 JPA가 적용되지 않는 문제**
+
+초기 개발 환경을 Spring Boot 3.2.2로 설정하고 JPA Gradle을 적용했는데 프로젝트를 실행해보니 'Cannot resolve symbol...' 이라는 오류가 계속 발생했다. 관련 패키지를 사용하는 과정에서 제대로 import가 이루어지지 않아서 발생하는 문제인 듯하여 다음과 같은 방법을 시도했다.
+
+1. IntelliJ의 Gradle 빌드 설정을 IntelliJ IDEA로 변경한다.
+2. 프로젝트를 다시 빌드한다.
+3. IDE를 최신 버전으로 업데이트한다.
+4. Spring Boot의 버전을 2.7.5 버전으로 낮추고 javax.persistence.\*을 import 한다.
+
+1, 2, 3번의 방법으로는 문제가 해결되지 않았고 4번 방법으로 문제를 해결할 수 있었다.
+
+#### **7-4 entity에 없는 컬럼의 데이터 받아오기**
+
+테이블을 join해서 데이터를 받을 때 entity에 대응하는 필드가 없는 컬럼의 데이터를 가져오려고 하니 오류가 발생했다. 해당 컬럼을 외래키로 설정해서 테이블에 컬럼을 추가하고 entity에 필드를 선언해서 문제를 해결하려고 했으나, 해당 컬럼의 값이 Unique 하지 않아서 외래키로 지정하는 것이 어려웠다.
+테이블에는 없는 컬럼을 entity에 추가하면 마찬가지로 오류가 발생해서 이런 쿼리를 수행할 때는 entity가 아닌 DTO로 데이터를 바로 받도록 코드를 작성했다.
+
+```java
+//jpql 예시
+@Query("select new com.mwamwayababmeokuh.mwamwa.domain" +
+            ".PostDTO(p.pid, p.aid, a.name, p.hashtag, p.content, p.lat, p.lng, p.writer, m.nickname, p.createdAt) " +
+            "from Post p " +
+            "join Artist a on p.aid = a.aid " +
+            "join Member m on p.writer = m.uid " +
+            "where p.writer = :uid order by p.createdAt desc")
+List<PostDTO> findAllByWriterOrderByCreatedAtDesc(@Param(value = "uid") long uid);
+```
+
+#### **7-5 CORS 오류**
+
+구현해 놓은 api를 프론트에서 호출하는 과정에서 CORS 오류가 발생했다. 이 오류는 동일한 출처의 리소스에만 접근하도록 제한하는 동일 출처 정책을 위반해서 발생하는 오류였다. 문제를 해결하기 위해서 프론트에게 접근 권한을 부여하는 WebConfig 파일을 작성했다.
+
+```java
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS");
+    }
+}
+```
+
+`addMapping()`은 CORS를 적용할 url 패턴을 정의한다. 여기서는 와일드 카드를 사용해서 모든 패턴에 CORS를 적용하도록 했다.
+`allowedOrigins()`는 자원 공유를 허용할 origin을 지정한다. “_”을 사용해서 모든 origin에 대해 공유를 허용했다.
+`allowedMethods()`는 허용할 http method를 지정한다. 마찬가지로 “_”을 사용하면 모든 method를 허용할 수 있지만 실제로 “\*”을 작성하고 api를 호출하니 CORS 오류가 해결되지 않아서 직접 method를 작성했다.
+
 ## 8.느낀점
 
 <p>
     [Front] 서주예 : 항상 준비되어있는 API를 사용했던 프로젝트와는 다르게 성장해가는 개발자 둘이서 진행하면서 수많은 에러를 만났다. 하지만 그를 통해 협업하면서 발생할 수 있는 다양한 문제들을 미리 겪어보고 해결해나갈 수 있어서 좋았다. 시간에 쫓겨 새로운 라이브러리 대신 익숙한 라이브러리를 사용하였지만, 리팩토링을 통해 새로 공부한 라이브러리를 도입하고, 중구난방하게 존재하는 중복코드를 줄이는 식으로 진행할 것이다.
 </p>
 <p>
-    [Back] 위서영 : 
+    [Back] 위서영 : 처음으로 프론트와 하는 협업이라서 만들어둔 api를 프론트에서 적용할 때 많은 오류가 발생했다. API 명세서 작성 단계에서 프론트와 상의하여 request, response를 같이 정의하는 과정의 중요성을 느꼈다. 또한 이번 프로젝트를 진행하면서 JPA를 공부해서 적용했는데 JPA에 대한 지식이 부족한 상태에서 사용하다 보니 초반에 오류가 많았다. 결국 오류는 해결했지만 JPA를 더 효율적으로 활용하는 방식으로 프로젝트를 수정해나가려고 한다.
 </p>
 
 ## 9.리팩토링
@@ -220,3 +344,12 @@ await api.get("/boards/posts/like", {
 - 반응형 화면 제작(모니터 일 경우 화면 두개로 분리)
 
 ### Back
+
+- 테이블을 조인할 때 JPA의 조인 기능을 이용하도록 수정
+- sql을 이용하여 작성한 쿼리를 jpql로 변경
+- 게시글 좋아요 정보를 저장하는 테이블에 중복값 저장 방지
+- 글 작성 시 해시태그 복수 입력 가능하도록 수정
+- 기능 추가 (이미지 저장, 글 조회 시 페이징 적용 등)
+- ssl 인증서 발급 및 https 통신 적용
+- 로그인 api에서 jwt를 활용하도록 수정하여 보안 강화
+- Hibernate가 생성한 쿼리 확인 및 비효율적인 쿼리 개선
